@@ -26,10 +26,10 @@ class TypesOfPackingRepository implements TypesOfPackingInterface
                 $action = '<ul class="action">';
 
                 // Edit Types of Packing (opens modal)
-                $action .= '<li class="edit"><a href="#" data-id="' . $typesOfPacking->id . '" id="editTypesOfPacking"><i class="icon-pencil-alt"></i></a></li>';
+                $action .= '<li class="edit"><a href="#" data-id="' . $typesOfPacking->id . '" id="editPackingType"><i class="icon-pencil-alt"></i></a></li>';
 
                 // Delete Types of Packing (SweetAlert confirmation)
-                $action .= '<li class="delete"><a href="#" data-id="' . $typesOfPacking->id . '" id="deleteTypesOfPacking"><i class="icon-trash"></i></a></li>';
+                $action .= '<li class="delete"><a href="#" data-id="' . $typesOfPacking->id . '" id="deletePackingType"><i class="icon-trash"></i></a></li>';
 
                 $action .= '</ul>';
 

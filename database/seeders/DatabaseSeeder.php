@@ -20,7 +20,10 @@ class DatabaseSeeder extends Seeder
             TimezoneSeeder::class,
             UserSeeder::class,
             DeliveryTimeSeeder::class,
-            PaymentMethodSeeder::class
+            PaymentMethodSeeder::class,
+            ShippingModeSeeder::class,
+            TypesOfPackingSeeder::class,
+            ServiceModeSeeder::class,
         ]);
     }
 }
