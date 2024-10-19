@@ -2,7 +2,11 @@
 @section('content')
 <div class="login-card login-dark">
     <div>
-        <div><a class="logo" href="index.html"><img class="img-fluid for-dark" src="/backend/assets/images/logo/logo.png" alt="looginpage"><img class="img-fluid for-light" src="/backend/assets/images/logo/logo_dark.png" alt="looginpage"></a></div>
+        <div>
+            <a class="logo" href="index.html">
+                <h1>Mile Couriers</h1>
+            </a>
+        </div>
         <div class="login-main">
 
             <!-- Bootstrap alert for errors (validation/authentication messages) -->

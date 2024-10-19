@@ -27,6 +27,10 @@ Route::macro('CustomResource', function ($url, $controller) {
     Route::resource($url, $controller);
 });
 
+Route::get('/regiter', function () {
+    return redirect()->route('login');
+});
+
 Route::get('/admin', function () {
     return redirect()->route('admin.dashboard');
 });
