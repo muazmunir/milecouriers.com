@@ -2,7 +2,6 @@
 <html lang="en">
     <head>
         @include('includes.backend.head')
-        @vite(['resources/js/app.js'])
     </head>
     <body>
         <!-- loader starts-->

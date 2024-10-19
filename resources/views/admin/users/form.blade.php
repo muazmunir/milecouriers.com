@@ -92,11 +92,13 @@
                             @enderror
                         </div>
 
-                        <!-- Address -->
+                        <!-- Country -->
                         <div class="col-md-4">
-                            <label class="form-label" for="address">Address</label>
-                            <input class="form-control @error('address') is-invalid @enderror" type="text" name="address" placeholder="Enter address" value="{{ old('address', $user ? $user->address : '') }}">
-                            @error('address')
+                            <label class="form-label" for="country_id">Country</label>
+                            <select class="form-select @error('country_id') is-invalid @enderror select2" name="country_id">
+                                <option value="168">Pakistan</option>
+                            </select>
+                            @error('country_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -119,15 +121,13 @@
                             @enderror
                         </div>
 
-                        <!-- Country -->
+                        
+
+                        <!-- Address -->
                         <div class="col-md-4">
-                            <label class="form-label" for="country_id">Country</label>
-                            <select class="form-select @error('country_id') is-invalid @enderror select2" name="country_id">
-                                <option selected disabled value="">Choose country...</option>
-                                <option value="1" {{ (old('country_id', $user ? $user->country_id : '') == 1) ? 'selected' : '' }}>United States</option>
-                                <option value="2" {{ (old('country_id', $user ? $user->country_id : '') == 2) ? 'selected' : '' }}>Canada</option>
-                            </select>
-                            @error('country_id')
+                            <label class="form-label" for="address">Address</label>
+                            <input class="form-control @error('address') is-invalid @enderror" type="text" name="address" placeholder="Enter address" value="{{ old('address', $user ? $user->address : '') }}">
+                            @error('address')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
