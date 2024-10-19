@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('delivery_times', function (Blueprint $table) {
             $table->id();
-            $table->time('delivery_time')->nullable();
-            $table->string('status')->nullable();
+            $table->string('delivery_time')->nullable();
             $table->timestamps();
         });
     }

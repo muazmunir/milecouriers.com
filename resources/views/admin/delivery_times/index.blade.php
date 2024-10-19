@@ -73,7 +73,7 @@
                     <!-- Delivery Time -->
                     <div class="form-group">
                         <label for="editDeliveryTime">Delivery Time</label>
-                        <input type="text" class="form-control" id="editDeliveryTime" name="delivery_time" required>
+                        <input type="text" class="form-control" id="edit_delivery_time" name="delivery_time" required>
                     </div>
                     <!-- Submit Button -->
                     <div class="form-group mt-3">
@@ -103,7 +103,6 @@
                 { data: 'delivery_time', name: 'delivery_time' },
                 { data: 'action', name: 'action' },
             ],
-            order: [[0, 'desc']]
         });
 
         // Handle form submission via AJAX with SweetAlert
@@ -170,7 +169,7 @@
                     if (response.success) {
                         var deliveryTime = response.data;
                         $('#deliveryTimeId').val(deliveryTime.id);
-                        $('#editDeliveryTime').val(deliveryTime.delivery_time);
+                        $('#edit_delivery_time').val(deliveryTime.delivery_time);
                         $('#editDeliveryTimeModal').modal('show');
                     } else {
                         // Handle error message

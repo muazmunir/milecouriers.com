@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             TimezoneSeeder::class,
             UserSeeder::class,
+            DeliveryTimeSeeder::class
         ]);
     }
 }
