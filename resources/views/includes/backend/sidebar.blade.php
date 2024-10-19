@@ -93,7 +93,7 @@
 
                 <li class="sidebar-list">
                     <i class="fa fa-thumb-tack"></i>
-                    <a class="sidebar-link sidebar-title link-nav" href="/admin/users/payment-methods">
+                    <a class="sidebar-link sidebar-title link-nav" href="/admin/payment-methods">
                         <svg class="stroke-icon">
                             <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>
                         </svg>
@@ -106,7 +106,7 @@
 
                 <li class="sidebar-list">
                     <i class="fa fa-thumb-tack"></i>
-                    <a class="sidebar-link sidebar-title link-nav" href="/admin/users/shipping-mode">
+                    <a class="sidebar-link sidebar-title link-nav" href="/admin/shipping-modes">
                         <svg class="stroke-icon">
                             <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>
                         </svg>
@@ -119,7 +119,7 @@
 
                 <li class="sidebar-list">
                     <i class="fa fa-thumb-tack"></i>
-                    <a class="sidebar-link sidebar-title link-nav" href="/admin/users/types-of-packing">
+                    <a class="sidebar-link sidebar-title link-nav" href="/admin/types-of-packings">
                         <svg class="stroke-icon">
                             <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>
                         </svg>
@@ -132,7 +132,7 @@
 
                 <li class="sidebar-list">
                     <i class="fa fa-thumb-tack"></i>
-                    <a class="sidebar-link sidebar-title link-nav" href="/admin/users/service-mode">
+                    <a class="sidebar-link sidebar-title link-nav" href="/admin/service-modes">
                         <svg class="stroke-icon">
                             <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>
                         </svg>
