@@ -39,13 +39,21 @@
                             @enderror
                         </div>
 
-
-
                         <!-- Email -->
                         <div class="col-md-4">
                             <label class="form-label" for="email">Email</label>
                             <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" placeholder="Enter email" value="{{ old('email', $user ? $user->email : '') }}">
                             @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="col-md-4">
+                            <label class="form-label" for="phone">Phone</label>
+                            <input class="form-control @error('phone') is-invalid @enderror" type="text" id="phone" name="phone" placeholder="Enter phone number" value="{{ old('phone', $user ? $user->phone : '') }}">
+                            <div class="invalid-feedback" id="phone-error"></div> <!-- Validation error will be shown here -->
+                            @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -78,31 +86,17 @@
                             @enderror
                         </div>
 
+                        <!-- Type -->
                         <div class="col-md-4">
                             <label class="form-label" for="type">Type</label>
                             <select name="type" class="form-select" id="userType">
-                            <option value="0" {{ $user && $user->type === 'user' ? 'selected' : '' }}>User</option>
-                            <option value="1" {{ $user && $user->type === 'admin' ? 'selected' : '' }}>Staff</option>
+                                <option value="0" {{ $user && $user->type === 'user' ? 'selected' : '' }}>User</option>
+                                <option value="1" {{ $user && $user->type === 'admin' ? 'selected' : '' }}>Staff</option>
                             </select>
                         </div>
 
-                         
-
-                        <!-- Country -->
-                        <div class="col-md-4">
-                            <label class="form-label" for="country_id">Country</label>
-                            <select class="form-select @error('country_id') is-invalid @enderror select2" name="country_id" id="country_id">
-                                <option value="" selected disabled>Choose country</option>
-                                @foreach($countries as $country)
-                                    <option value="{{ $country->id }}" {{ $user && $user->country_id == $country->id ? 'selected' : '' }}>
-                                        {{ $country->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('country_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        <!-- Hidden Country -->
+                        <input type="hidden" name="country_id" value="167"> <!-- Pakistan -->
 
                         <!-- State -->
                         <div class="col-md-4">
@@ -127,8 +121,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-
-                        
 
                         <!-- Zipcode -->
                         <div class="col-md-4">
@@ -162,90 +154,121 @@
 
 @push('scripts')
 <script>
-
-     
     $(document).ready(function() {
-    let selectedCountryId = "{{ old('country_id', $user ? $user->country_id : '') }}";
-    let selectedStateId = "{{ old('state_id', $user ? $user->state_id : '') }}";
-    let selectedCityId = "{{ old('city_id', $user ? $user->city_id : '') }}";
-    let isPageLoad = true; // Flag to track if it's a page load
 
-    // Auto-select states and cities if user is being edited
-    if (selectedCountryId) {
+        $('#phone').on('input', function() {
+            let phone = $(this).val();
+
+            // Check if phone starts with '0' and remove the '0' before adding '+92'
+            if (phone.startsWith('0')) {
+                phone = phone.substring(1); // Remove the first '0'
+            }
+
+            // Ensure the phone starts with +92
+            if (!phone.startsWith('+92')) {
+                phone = '+92' + phone.replace(/^\+?92/, ''); // Add +92 and remove any existing wrong prefix
+            }
+
+            // Only allow digits after +92
+            let validPhone = phone.replace(/[^+0-9]/g, ''); // Remove non-numeric characters
+
+            $(this).val(validPhone); // Set the valid phone back to input
+
+            // Length validation: the phone number must be 13 characters long including the +92 prefix
+            if (validPhone.length < 13) {
+                $('#phone-error').text('Phone number must be 13 digits long including +92.');
+                $(this).addClass('is-invalid');
+            } else if (validPhone.length > 13) {
+                $('#phone-error').text('Phone number cannot be longer than 13 digits including +92.');
+                $(this).addClass('is-invalid');
+            } else {
+                $('#phone-error').text('');
+                $(this).removeClass('is-invalid');
+            }
+        });
+
+        $('#phone').on('keydown', function(e) {
+            let phone = $(this).val();
+            
+            // Prevent removal of the +92 prefix
+            if ((e.key === 'Backspace' || e.key === 'Delete') && phone.length <= 3) {
+                e.preventDefault(); // Stop the key press
+            }
+        });
+
+        let selectedCountryId = 167; // Pakistan
+        let selectedStateId = "{{ old('state_id', $user ? $user->state_id : '') }}";
+        let selectedCityId = "{{ old('city_id', $user ? $user->city_id : '') }}";
+        let isPageLoad = true; // Flag to track if it's a page load
+
+        // Auto-select states and cities if user is being edited
         loadStates(selectedCountryId, selectedStateId, selectedCityId);
-    }
 
-    // Handle country change event
-    $('#country_id').on('change', function() {
-        let countryId = $(this).val();
-        loadStates(countryId);
-    });
+        // Handle state change event, but only after page load is complete
+        $('#state_id').on('change', function() {
+            if (!isPageLoad) {
+                let stateId = $(this).val();
+                loadCities(stateId); // Reload cities if the state is changed by the user
+            }
+        });
 
-    // Handle state change event, but only after page load is complete
-    $('#state_id').on('change', function() {
-        if (!isPageLoad) {
-            let stateId = $(this).val();
-            loadCities(stateId); // Reload cities if the state is changed by the user
-        }
-    });
+        // Load states based on country, and then load cities after states are loaded
+        function loadStates(countryId, selectedState = null, selectedCity = null) {
+            if (countryId) {
+                $.ajax({
+                    url: '{{ route("get.states", "") }}/' + countryId,
+                    type: 'GET',
+                    success: function(data) {
+                        $('#state_id').empty().append('<option value="" selected disabled>Choose state</option>');
+                        $.each(data, function(id, name) {
+                            let selected = id == selectedState ? 'selected' : '';
+                            $('#state_id').append('<option value="' + id + '" ' + selected + '>' + name + '</option>');
+                        });
 
-    // Load states based on country, and then load cities after states are loaded
-    function loadStates(countryId, selectedState = null, selectedCity = null) {
-        if (countryId) {
-            $.ajax({
-                url: '{{ route("get.states", "") }}/' + countryId,
-                type: 'GET',
-                success: function(data) {
-                    $('#state_id').empty().append('<option value="" selected disabled>Choose state</option>');
-                    $.each(data, function(id, name) {
-                        let selected = id == selectedState ? 'selected' : '';
-                        $('#state_id').append('<option value="' + id + '" ' + selected + '>' + name + '</option>');
-                    });
+                        $('#state_id').prop('disabled', false); // Enable state dropdown
 
-                    $('#state_id').prop('disabled', false); // Enable state dropdown
-
-                    // If a state is pre-selected, load cities after states are loaded
-                    if (selectedState) {
-                        loadCities(selectedState, selectedCity);
+                        // If a state is pre-selected, load cities after states are loaded
+                        if (selectedState) {
+                            loadCities(selectedState, selectedCity);
+                        }
+                    },
+                    error: function() {
+                        alert('Error retrieving states.');
+                    },
+                    complete: function() {
+                        isPageLoad = false; // Once states and cities are loaded, allow future change events
                     }
-                },
-                error: function() {
-                    alert('Error retrieving states.');
-                },
-                complete: function() {
-                    isPageLoad = false; // Once states and cities are loaded, allow future change events
-                }
-            });
-        } else {
-            $('#state_id').empty().append('<option value="" selected disabled>Choose state</option>').prop('disabled', true);
-            $('#city_id').empty().append('<option value="" selected disabled>Choose city</option>').prop('disabled', true);
+                });
+            } else {
+                $('#state_id').empty().append('<option value="" selected disabled>Choose state</option>').prop('disabled', true);
+                $('#city_id').empty().append('<option value="" selected disabled>Choose city</option>').prop('disabled', true);
+            }
         }
-    }
 
-    // Load cities based on state
-    function loadCities(stateId, selectedCity = null) {
-        if (stateId) {
-            $.ajax({
-                url: '{{ route("get.cities", "") }}/' + stateId,
-                type: 'GET',
-                success: function(data) {
-                    $('#city_id').empty().append('<option value="" selected disabled>Choose city</option>');
-                    $.each(data, function(id, name) {
-                        let selected = id == selectedCity ? 'selected' : '';
-                        $('#city_id').append('<option value="' + id + '" ' + selected + '>' + name + '</option>');
-                    });
+        // Load cities based on state
+        function loadCities(stateId, selectedCity = null) {
+            if (stateId) {
+                $.ajax({
+                    url: '{{ route("get.cities", "") }}/' + stateId,
+                    type: 'GET',
+                    success: function(data) {
+                        $('#city_id').empty().append('<option value="" selected disabled>Choose city</option>');
+                        $.each(data, function(id, name) {
+                            let selected = id == selectedCity ? 'selected' : '';
+                            $('#city_id').append('<option value="' + id + '" ' + selected + '>' + name + '</option>');
+                        });
 
-                    $('#city_id').prop('disabled', false); // Enable city dropdown
-                },
-                error: function() {
-                    alert('Error retrieving cities.');
-                }
-            });
-        } else {
-            $('#city_id').empty().append('<option value="" selected disabled>Choose city</option>').prop('disabled', true);
+                        $('#city_id').prop('disabled', false); // Enable city dropdown
+                    },
+                    error: function() {
+                        alert('Error retrieving cities.');
+                    }
+                });
+            } else {
+                $('#city_id').empty().append('<option value="" selected disabled>Choose city</option>').prop('disabled', true);
+            }
         }
-    }
-});
-
+        
+    });
 </script>
 @endpush
