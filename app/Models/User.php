@@ -14,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasRoles, SoftDeletes, HasApiTokens, ModelEventsLogger;
+    use HasFactory, Notifiable, HasRoles, HasApiTokens, ModelEventsLogger;
 
     /**
      * The attributes that are mass assignable.
@@ -29,14 +29,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'type',
         'avatar',
-        'google_provider_id',
-        'facebook_provider_id',
-        'github_provider_id',
-        'address',
-        'city',
+        'country_id',
+        'state_id',
+        'city_id',
         'state',
         'zipcode',
-        'country_id',
+        'address',
     ];
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Interfaces\RoleInterface;
 use App\Interfaces\UserInterface;
+use App\Models\Country;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -43,7 +44,9 @@ class UserController extends Controller
 
         $user = null;
 
-        return view('admin.users.form', compact('pageTitle', 'roles', 'user'));
+        $countries = Country::select('id', 'name')->where('subregion_id', 14)->get();
+
+        return view('admin.users.form', compact('pageTitle', 'roles', 'user', 'countries'));
     }
 
     public function store(UserRequest $request): RedirectResponse
@@ -64,7 +67,9 @@ class UserController extends Controller
 
         $userRole = $this->roleRepository->getUserRoles($id);
 
-        return view('admin.users.form', compact('pageTitle', 'user', 'roles', 'userRole'));
+        $countries = Country::select('id', 'name')->where('subregion_id', 14)->get();
+
+        return view('admin.users.form', compact('pageTitle', 'user', 'roles', 'userRole', 'countries'));
     }
 
     public function update(UserRequest $request, $id): RedirectResponse

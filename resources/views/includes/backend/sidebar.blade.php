@@ -39,7 +39,7 @@
                     </a>
                 </li>
 
-                <li class="sidebar-list">
+                <!-- <li class="sidebar-list">
                     <i class="fa fa-thumb-tack"></i>
                     <a class="sidebar-link sidebar-title link-nav" href="/admin/roles">
                         <svg class="stroke-icon">
@@ -50,7 +50,7 @@
                         </svg>
                         <span>Roles</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="sidebar-list">
                     <i class="fa fa-thumb-tack"></i>

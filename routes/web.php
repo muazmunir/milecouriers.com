@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DeliveryTimeController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ServiceModeController;
 use App\Http\Controllers\Admin\ShippingModeController;
+use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\TypesOfPackingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController;
@@ -56,4 +58,6 @@ Route::middleware('auth', 'verified', 'user-access:admin')->prefix('admin')->gro
     Route::CustomResource('shipping-modes', ShippingModeController::class);
     Route::CustomResource('types-of-packings', TypesOfPackingController::class);
     Route::CustomResource('service-modes', ServiceModeController::class);
+    Route::get('/get-states/{country_id}', [StateController::class, 'getStates'])->name('get.states');
+    Route::get('/get-cities/{state_id}', [CityController::class, 'getCities'])->name('get.cities');
 });

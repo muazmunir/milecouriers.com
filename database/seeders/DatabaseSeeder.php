@@ -14,16 +14,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            CountrySeeder::class,
-            CurrencySeeder::class,
             SettingSeeder::class,
-            TimezoneSeeder::class,
             UserSeeder::class,
             DeliveryTimeSeeder::class,
             PaymentMethodSeeder::class,
             ShippingModeSeeder::class,
             TypesOfPackingSeeder::class,
             ServiceModeSeeder::class,
+            RegionSeeder::class,
+            SubRegionSeeder::class,
+            CountrySeeder::class,
+            StateSeeder::class,
+            CitySeeder::class
         ]);
     }
 }

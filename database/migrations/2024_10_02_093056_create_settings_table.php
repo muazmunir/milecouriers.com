@@ -51,9 +51,6 @@ return new class extends Migration
             $table->boolean('is_github_oauth')->default(false);
             $table->boolean('status')->default('1');
             $table->timestamps();
-            $table->foreign('timezone_id')->references('id')->on('timezones')->onDelete('cascade');
-            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
     }
 

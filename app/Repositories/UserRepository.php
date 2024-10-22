@@ -68,6 +68,10 @@ class UserRepository implements UserInterface
     {
         $input = $request->all();
 
+        if (empty($input['email'])) {
+            $input['email'] = 'user_' . time() . '@milecouriers.com';
+        }
+
         if (empty($input['password'])) {
             $input['password'] = Str::random(10);
         } else {
@@ -75,9 +79,6 @@ class UserRepository implements UserInterface
         }
 
         $user = $this->user->create($input);
-        if ($request->has('roles')) {
-            $user->syncRoles($request->roles);
-        }
 
         return $user;
     }
@@ -95,6 +96,10 @@ class UserRepository implements UserInterface
             $input['password'] = $this->hash::make($input['password']);
         } else {
             $input = $this->arr->except($input, ['password']);
+        }
+
+        if (empty($input['email'])) {
+            $input['email'] = 'user_' . time() . '@milecouriers.com';
         }
 
         $this->user->find($id)->update($input);
