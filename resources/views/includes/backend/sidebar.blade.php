@@ -142,6 +142,32 @@
                         <span>Service Mode</span>
                     </a>
                 </li>
+
+                <li class="sidebar-list">
+                    <i class="fa fa-thumb-tack"></i>
+                    <a class="sidebar-link sidebar-title link-nav" href="/admin/shipments/create">
+                        <svg class="stroke-icon">
+                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>
+                        </svg>
+                        <svg class="fill-icon">
+                            <use href="/backend/assets/svg/icon-sprite.svg#fill-file"></use>
+                        </svg>
+                        <span>Create Shipment</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-list">
+                    <i class="fa fa-thumb-tack"></i>
+                    <a class="sidebar-link sidebar-title link-nav" href="/admin/shipments">
+                        <svg class="stroke-icon">
+                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>
+                        </svg>
+                        <svg class="fill-icon">
+                            <use href="/backend/assets/svg/icon-sprite.svg#fill-file"></use>
+                        </svg>
+                        <span>List of Shipments</span>
+                    </a>
+                </li>
    
             </ul>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
