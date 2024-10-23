@@ -145,6 +145,19 @@
 
                 <li class="sidebar-list">
                     <i class="fa fa-thumb-tack"></i>
+                    <a class="sidebar-link sidebar-title link-nav" href="/admin/delivery-status">
+                        <svg class="stroke-icon">
+                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>
+                        </svg>
+                        <svg class="fill-icon">
+                            <use href="/backend/assets/svg/icon-sprite.svg#fill-file"></use>
+                        </svg>
+                        <span>Delivery Status</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-list">
+                    <i class="fa fa-thumb-tack"></i>
                     <a class="sidebar-link sidebar-title link-nav" href="/admin/shipments/create">
                         <svg class="stroke-icon">
                             <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             PaymentMethodSeeder::class,
             ShippingModeSeeder::class,
             TypesOfPackingSeeder::class,
+            DeliveryStatusSeeder::class,
             ServiceModeSeeder::class,
             RegionSeeder::class,
             SubRegionSeeder::class,
