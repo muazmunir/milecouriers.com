@@ -16,6 +16,9 @@
     <script src="/backend/assets/js/slick/slick.min.js"></script>
     <script src="/backend/assets/js/slick/slick.js"></script>
     <script src="/backend/assets/js/header-slick.js"></script>
+
+    <script src="/backend/assets/js/select2/select2.min.js"></script>
+
     <!-- calendar js-->
     <script src="/backend/assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
     <script src="/backend/assets/js/sweet-alert/sweetalert.min.js"></script>
@@ -23,3 +26,9 @@
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="/backend/assets/js/script.js"></script>
+
+    <script>
+            $(document).ready(function() {
+                $('.select2').select2();
+            });
+        </script>

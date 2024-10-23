@@ -51,7 +51,7 @@
                         <!-- Phone -->
                         <div class="col-md-4">
                             <label class="form-label" for="phone">Phone</label>
-                            <input class="form-control @error('phone') is-invalid @enderror" type="text" id="phone" name="phone" placeholder="Enter phone number" value="{{ old('phone', $user ? $user->phone : '') }}">
+                            <input class="form-control @error('phone') is-invalid @enderror" type="tel" id="phone" name="phone" placeholder="Enter phone number" value="{{ old('phone', $user ? $user->phone : '') }}">
                             <div class="invalid-feedback" id="phone-error"></div> <!-- Validation error will be shown here -->
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -88,10 +88,11 @@
 
                         <!-- Type -->
                         <div class="col-md-4">
-                            <label class="form-label" for="type">Type</label>
-                            <select name="type" class="form-select" id="userType">
+                            <label class="form-label" for="type">Role</label>
+                            <select name="type" class="form-select select2" id="userType">
                                 <option value="0" {{ $user && $user->type === 'user' ? 'selected' : '' }}>User</option>
-                                <option value="1" {{ $user && $user->type === 'admin' ? 'selected' : '' }}>Staff</option>
+                                <option value="1" {{ $user && $user->type === 'admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="2" {{ $user && $user->type === 'admin' ? 'selected' : '' }}>Driver</option>
                             </select>
                         </div>
 
@@ -101,7 +102,7 @@
                         <!-- State -->
                         <div class="col-md-4">
                             <label class="form-label" for="state_id">State</label>
-                            <select class="form-select @error('state_id') is-invalid @enderror" name="state_id" id="state_id" disabled>
+                            <select class="form-select select2 @error('state_id') is-invalid @enderror" name="state_id" id="state_id" disabled>
                                 <option value="" selected disabled>Choose state</option>
                                 <!-- Options will be loaded dynamically -->
                             </select>
@@ -113,7 +114,7 @@
                         <!-- City -->
                         <div class="col-md-4">
                             <label class="form-label" for="city">City</label>
-                            <select class="form-select @error('city_id') is-invalid @enderror" name="city_id" id="city_id" disabled>
+                            <select class="form-select select2 @error('city_id') is-invalid @enderror" name="city_id" id="city_id" disabled>
                                 <option value="" selected disabled>Choose state</option>
                                 <!-- Options will be loaded dynamically -->
                             </select>
@@ -125,7 +126,7 @@
                         <!-- Zipcode -->
                         <div class="col-md-4">
                             <label class="form-label" for="zipcode">Zipcode</label>
-                            <input class="form-control @error('zipcode') is-invalid @enderror" type="text" name="zipcode" placeholder="Enter zipcode" value="{{ old('zipcode', $user ? $user->zipcode : '') }}">
+                            <input class="form-control @error('zipcode') is-invalid @enderror" type="text" name="zipcode" placeholder="Enter zipcode" value="{{ old('zipcode', $user ? $user->zipcode : '54000') }}">
                             @error('zipcode')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

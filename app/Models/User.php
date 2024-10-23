@@ -63,7 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function type(): Attribute
     {
         return new Attribute(
-            get: fn ($value) => ['user', 'admin'][$value],
+            get: fn ($value) => ['user', 'admin', 'driver'][$value],
         );
     }
 

@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/themify.css">
     <!-- Flag icon-->
     <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/flag-icon.css">
+    <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/select2.css">
     <!-- Feather icon-->
     <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/feather-icon.css">
     <!-- Plugins css start-->

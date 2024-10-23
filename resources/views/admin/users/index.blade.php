@@ -25,6 +25,7 @@
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Role</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -48,6 +49,7 @@
                 { data: 'id', name: 'id' },
                 { data: 'name', name: 'name' },
                 { data: 'email', name: 'email' },
+                { data: 'type', name: 'type' },
                 { data: 'action', name: 'action' },
             ],
             order: [[0, 'desc']]

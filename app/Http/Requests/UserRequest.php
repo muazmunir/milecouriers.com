@@ -33,7 +33,7 @@ class UserRequest extends FormRequest
                 'max:255', 
                 Rule::unique('users', 'email')->ignore($userId), // Ignore email for the current user in update
             ],
-            'phone'      => ['nullable', 'string', 'max:20'],
+            'phone'      => ['required', 'string', 'max:20'],
             'password'   => [$this->isMethod('post') ? 'nullable' : 'nullable', 'string', 'min:8', 'confirmed'],
             'address'    => ['nullable', 'string', 'max:255'],
             'city'       => ['nullable', 'string', 'max:255'],

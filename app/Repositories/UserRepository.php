@@ -40,19 +40,8 @@ class UserRepository implements UserInterface
         return $this->datatables->of($query)
             ->addColumn('action', function ($user) {
                 $action = '<ul class="action">';
-
-                // Check if the user has a Super Admin role
-                if ($user->hasRole('Super Admin')) {
-                    // Only show edit button for Super Admin
-                    if (isSuperAdmin()) {
-                        $action .= '<li class="edit"><a href="'.route('users.edit', $user->id).'"><i class="icon-pencil-alt"></i></a></li>';
-                    }
-                } else {
-                    // Show edit and delete buttons for non-Super Admin users
-                    $action .= '<li class="edit"><a href="'.route('users.edit', $user->id).'"><i class="icon-pencil-alt"></i></a></li>';
-                    $action .= '<li class="delete"><a data-id="'.$user->id.'" id="deleteUser"><i class="icon-trash"></i></a></li>';
-                }
-
+                $action .= '<li class="edit"><a href="'.route('users.edit', $user->id).'"><i class="icon-pencil-alt"></i></a></li>';
+                $action .= '<li class="delete"><a data-id="'.$user->id.'" id="deleteUser"><i class="icon-trash"></i></a></li>';
                 $action .= '</ul>';
 
                 return $action;
