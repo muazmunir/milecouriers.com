@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\ShipmentInterface;
+use App\Models\DeliveryStatus;
 use App\Models\DeliveryTime;
 use App\Models\PaymentMethod;
 use App\Models\ShippingMode;
+use App\Models\TypesOfPacking;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
 {
@@ -32,7 +33,16 @@ class ShipmentController extends Controller
         $delivery_times = DeliveryTime::all();
         $payment_methods = PaymentMethod::all();
         $Shipping_modes = ShippingMode::all();
+        $delivery_statuses = DeliveryStatus::all();
+        $type_of_packagings = TypesOfPacking::all();
 
-        return view('admin.shipments.form', compact('pageTitle', 'delivery_times', 'payment_methods', 'Shipping_modes'));
+        return view('admin.shipments.form', compact(
+            'pageTitle',
+            'delivery_times',
+            'payment_methods',
+            'Shipping_modes',
+            'delivery_statuses',
+            'type_of_packagings',
+        ));
     }
 }

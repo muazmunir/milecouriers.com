@@ -11,14 +11,13 @@ class CountryRepository implements CountryInterface
 
     public function __construct()
     {
-        $this->country = new Country();
+        $this->country = new Country;
     }
-
 
     public function fetchCountries($request)
     {
         $search = $request->get('query');
-        $countries = $this->country->where('name', 'like', '%' . $search . '%')->get(['id', 'name']);
+        $countries = $this->country->where('name', 'like', '%'.$search.'%')->get(['id', 'name']);
 
         return $countries;
     }

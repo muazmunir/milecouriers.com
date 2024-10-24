@@ -11,6 +11,7 @@ use Spatie\Permission\Models\Role;
 class UserSeeder extends Seeder
 {
     use WithoutModelEvents;
+
     /**
      * Run the database seeds.
      */

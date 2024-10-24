@@ -53,6 +53,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth', 'verified', 'user-access:admin')->prefix('admin')->group(function () {
+    // Route to get senders
+    Route::get('/ajax/get-senders', [UserController::class, 'getSenders'])->name('ajax.get-senders');
+
+    // Route to get recipients except the selected sender
+    Route::get('/ajax/get-recipients/{senderId}', [UserController::class, 'getRecipients'])->name('ajax.get-recipients');
+    Route::get('/fetch-users', [UserController::class, 'fetchUsers'])->name('fetch.users');
     Route::CustomResource('users', UserController::class);
     Route::CustomResource('roles', RoleController::class);
     Route::CustomResource('delivery-times', DeliveryTimeController::class);

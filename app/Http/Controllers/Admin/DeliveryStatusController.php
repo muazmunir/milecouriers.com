@@ -36,12 +36,12 @@ class DeliveryStatusController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Delivery status added successfully!'
+                'message' => 'Delivery status added successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to add delivery status. Please try again.'
+                'message' => 'Failed to add delivery status. Please try again.',
             ], 500);
         }
     }
@@ -53,13 +53,13 @@ class DeliveryStatusController extends Controller
         if ($deliveryStatus) {
             return response()->json([
                 'success' => true,
-                'data' => $deliveryStatus
+                'data' => $deliveryStatus,
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => 'Delivery status not found.'
+            'message' => 'Delivery status not found.',
         ], 404);
     }
 
@@ -70,12 +70,12 @@ class DeliveryStatusController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Delivery status updated successfully!'
+                'message' => 'Delivery status updated successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update delivery status. Please try again.'
+                'message' => 'Failed to update delivery status. Please try again.',
             ], 500);
         }
     }
@@ -87,12 +87,12 @@ class DeliveryStatusController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Delivery status deleted successfully!'
+                'message' => 'Delivery status deleted successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete delivery status. Please try again.'
+                'message' => 'Failed to delete delivery status. Please try again.',
             ], 500);
         }
     }

@@ -7,6 +7,7 @@ use App\Http\Requests\UserRequest;
 use App\Interfaces\RoleInterface;
 use App\Interfaces\UserInterface;
 use App\Models\Country;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -75,7 +76,7 @@ class UserController extends Controller
     public function update(UserRequest $request, $id): RedirectResponse
     {
         $this->userRepository->updateUser($request, $id);
-        
+
         return redirect()->back()->with([
             'message' => 'User Updated Successfully',
             'alert-type' => 'success',
@@ -101,5 +102,12 @@ class UserController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function fetchUsers()
+    {
+        $users = User::where('type', 2)->whereNotNull('phone')->get();
+
+        return response()->json($users);
     }
 }

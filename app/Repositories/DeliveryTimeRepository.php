@@ -9,12 +9,13 @@ use Yajra\Datatables\Datatables;
 class DeliveryTimeRepository implements DeliveryTimeInterface
 {
     private $delivery_time;
+
     private $datatables;
 
     public function __construct()
     {
-        $this->delivery_time = new DeliveryTime();
-        $this->datatables = new Datatables();
+        $this->delivery_time = new DeliveryTime;
+        $this->datatables = new Datatables;
     }
 
     public function getDataTable()
@@ -26,10 +27,10 @@ class DeliveryTimeRepository implements DeliveryTimeInterface
                 $action = '<ul class="action">';
 
                 // Edit Delivery Time (opens modal)
-                $action .= '<li class="edit"><a href="#" data-id="' . $deliveryTime->id . '" id="editDeliveryTime"><i class="icon-pencil-alt"></i></a></li>';
+                $action .= '<li class="edit"><a href="#" data-id="'.$deliveryTime->id.'" id="editDeliveryTime"><i class="icon-pencil-alt"></i></a></li>';
 
                 // Delete Delivery Time (SweetAlert confirmation)
-                $action .= '<li class="delete"><a href="#" data-id="' . $deliveryTime->id . '" id="deleteDeliveryTime"><i class="icon-trash"></i></a></li>';
+                $action .= '<li class="delete"><a href="#" data-id="'.$deliveryTime->id.'" id="deleteDeliveryTime"><i class="icon-trash"></i></a></li>';
 
                 $action .= '</ul>';
 
@@ -52,12 +53,14 @@ class DeliveryTimeRepository implements DeliveryTimeInterface
     public function updateDeliveryTime(int $id, array $data)
     {
         $deliveryTime = $this->delivery_time->find($id);
+
         return $deliveryTime ? $deliveryTime->update($data) : null;
     }
 
     public function deleteDeliveryTime(int $id)
     {
         $deliveryTime = $this->delivery_time->find($id);
+
         return $deliveryTime ? $deliveryTime->delete() : false;
     }
 }

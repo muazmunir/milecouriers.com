@@ -11,6 +11,6 @@ interface PaymentMethodInterface
     public function findPaymentMethodById($id);
 
     public function updatePaymentMethod($id, array $data);
-    
+
     public function deletePaymentMethod($id);
 }

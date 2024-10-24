@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ServiceModeRequest; 
-use App\Interfaces\ServiceModeInterface; 
+use App\Http\Requests\ServiceModeRequest;
+use App\Interfaces\ServiceModeInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 
@@ -36,12 +36,12 @@ class ServiceModeController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Service mode added successfully!'
+                'message' => 'Service mode added successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to add service mode. Please try again.'
+                'message' => 'Failed to add service mode. Please try again.',
             ], 500);
         }
     }
@@ -53,13 +53,13 @@ class ServiceModeController extends Controller
         if ($serviceMode) {
             return response()->json([
                 'success' => true,
-                'data' => $serviceMode
+                'data' => $serviceMode,
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => 'Service mode not found.'
+            'message' => 'Service mode not found.',
         ], 404);
     }
 
@@ -70,12 +70,12 @@ class ServiceModeController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Service mode updated successfully!'
+                'message' => 'Service mode updated successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update service mode. Please try again.'
+                'message' => 'Failed to update service mode. Please try again.',
             ], 500);
         }
     }
@@ -87,12 +87,12 @@ class ServiceModeController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Service mode deleted successfully!'
+                'message' => 'Service mode deleted successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete service mode. Please try again.'
+                'message' => 'Failed to delete service mode. Please try again.',
             ], 500);
         }
     }

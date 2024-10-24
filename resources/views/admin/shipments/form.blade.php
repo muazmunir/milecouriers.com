@@ -5,16 +5,18 @@
     <div class="row">
         <div class="col-md-6">
              <div class="card">
-                <div class="card-header bg-primary pt-2 pb-2 align-items-center">
+                <div class="card-header bg-primary pt-2 pb-2 align-items-center d-flex justify-content-between">
                     <h4 class="text-white mb-0">Sender Information</h4>
+                    <!-- Refresh Button -->
+                    <button id="refreshUsers" class="btn btn-square btn-outline-light">Refresh Users</button>
                 </div>
                 <div class="card-body">
                     <div class="card-wrapper border rounded-3">
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <label for="" class="form-label">Sender/Customer</label>
-                                <select name="" id="" class="form-select select2">
-                                    <option value="">Search Sender</option>
+                                <select name="sender_id" id="senderSelect" class="form-select select2">
+                                    <option value="" selected disabled>Select Sender</option>
                                 </select>
                             </div>
                             <div class="col-md-12">
@@ -36,7 +38,7 @@
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <label for="" class="form-label">Recipient/Client</label>
-                                <select name="" id="" class="form-select select2">
+                                <select name="" id="recipientSelect" class="form-select select2">
                                     <option value="">Search Recipient</option>
                                 </select>
                             </div>
@@ -76,7 +78,9 @@
                             <div class="col-md-4">
                                 <label for="" class="form-label">Delivery Status</label>
                                 <select name="" id="" class="form-select select2">
-                                    <option value="">Choose Delivery Status</option>
+                                    @foreach($delivery_statuses as $delivery_status)
+                                        <option value="{{ $delivery_status->id }}">{{ $delivery_status->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -115,44 +119,76 @@
                 <div class="card-body">
                     <div id="packageContainer">
                         <div class="card-wrapper border rounded-3 border-primary package-item mb-3">
-                            <div class="row g-3">
-                                <div class="col-md-2">
-                                    <label for="weight" class="form-label">Package Weight (kg)</label>
-                                    <input type="number" step="0.01" class="form-control" name="weight[]" required>
+                            <div class="row align-items-center"> <!-- Added 'align-items-center' for vertical alignment -->
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+                                        <label for="description">Package Description</label>
+                                        <div class="input-group">
+                                            <textarea name="description[]" rows="1" class="form-control"  placeholder="Package Description"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="length" class="form-label">Length (cm)</label>
-                                    <input type="number" step="0.01" class="form-control" name="length[]" required>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="form-group">
+                                        <label for="shipping_mode_0">Type of packing</label>
+                                        <select name="type_of_packaging[]" class="form-select">
+                                            @foreach($type_of_packagings as $type_of_packaging)
+                                                <option value="{{ $type_of_packaging->id }}">{{ $type_of_packaging->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="width" class="form-label">Width (cm)</label>
-                                    <input type="number" step="0.01" class="form-control" name="width[]" required>
+                                <div class="col-sm-12 col-md-6 col-lg-1">
+                                    <div class="form-group">
+                                        <label for="weight">Weight</label>
+                                        <div class="input-group">
+                                            <input type="text" value="0" name="weight[]"  class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="height" class="form-label">Height (cm)</label>
-                                    <input type="number" step="0.01" class="form-control" name="height[]" required>
+                                <div class="col-sm-12 col-md-6 col-lg-1">
+                                    <div class="form-group">
+                                        <label for="length">Length</label>
+                                        <div class="input-group">
+                                            <input type="text" value="0" name="length[]" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="declared_value" class="form-label">Declared Value ($)</label>
-                                    <input type="number" step="0.01" class="form-control" name="declared_value[]" required>
+                                <div class="col-sm-12 col-md-6 col-lg-1">
+                                    <div class="form-group">
+                                        <label for="width">Width</label>
+                                        <div class="input-group">
+                                            <input type="text"  value="0" name="width[]" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="insurance" class="form-label">Insurance Amount</label>
-                                    <input type="number" step="0.01" class="form-control" name="insurance[]">
+                                <div class="col-sm-12 col-md-6 col-lg-1">
+                                    <div class="form-group">
+                                        <label for="height_0">Height</label>
+                                        <div class="input-group">
+                                            <input type="text"  value="0"  name="height" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="" class="form-label">Type of packaging</label>
-                                    <select name="" id="" class="form-select">
-                                        <option value="">Choose Sender</option>
-                                    </select>
+                                <div class="col-sm-12 col-md-6 col-lg-1">
+                                    <div class="form-group">
+                                        <label for="declaredValue_0">DecValue</label>
+                                        <div class="input-group">
+                                            <input type="text"  value="0" name="declared_value[]" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <label for="package_contents" class="form-label">Package Contents</label>
-                                    <textarea class="form-control" name="package_contents[]" rows="1" placeholder="Describe the contents of the package" required></textarea>
+                                <div class="col-sm-12 col-md-6 col-lg-1 d-flex align-items-center justify-content-center">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-outline-danger remove-package" style="height: 38px;">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <!-- Move the Add Package button here -->
                     <button type="button" id="addPackage" class="btn btn-success mt-3">Add Package</button>
                 </div>
@@ -167,13 +203,40 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
+
+    function fetchUsers() {
+        $.ajax({
+            url: '{{ route("fetch.users") }}',
+            type: 'GET',
+            success: function(data) {
+                let senderSelect = $('#senderSelect');
+                senderSelect.empty();  // Clear current options
+                senderSelect.append('<option value="" disabled>Select Sender</option>');
+                
+                $.each(data, function(key, user) {
+                    senderSelect.append(`<option value="${user.id}">${user.first_name} ${user.last_name} | ${user.phone}</option>`);
+                });
+            },
+            error: function() {
+                alert('Failed to fetch users. Please try again.');
+            }
+        });
+    }
+
+    // Initial fetch when page loads
+    fetchUsers();
+
+    // Refresh users on button click
+    $('#refreshUsers').click(function() {
+        fetchUsers();
+    });
+    
+    $('.package-item:first').find('.remove-package').hide();
     // Function to add a new package
     $('#addPackage').click(function() {
         var packageClone = $('.package-item:first').clone();  // Clone the first package item
         packageClone.find('input, textarea').val('');  // Clear the values in the cloned section
-
-        // Add the remove button to the cloned section
-        packageClone.append('<div><button type="button" class="btn btn-sm btn-danger remove-package mt-3">Remove Package</button>');
+        packageClone.find('.remove-package').show();   // Ensure remove button is visible for the cloned item
 
         $('#packageContainer').append(packageClone);  // Add the cloned section to the container
     });

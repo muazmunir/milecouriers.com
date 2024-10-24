@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('country_id');  // Foreign key to countries table
             $table->decimal('latitude', 10, 7)->nullable();  // Latitude (optional)
             $table->decimal('longitude', 10, 7)->nullable(); // Longitude (optional)
-            
+
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });

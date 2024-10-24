@@ -12,5 +12,4 @@ class DeliveryTime extends Model
     protected $fillable = [
         'delivery_time',
     ];
-    
 }

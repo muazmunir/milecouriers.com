@@ -36,12 +36,12 @@ class DeliveryTimeController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Delivery time added successfully!'
+                'message' => 'Delivery time added successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to add delivery time. Please try again.'
+                'message' => 'Failed to add delivery time. Please try again.',
             ], 500);
         }
     }
@@ -53,13 +53,13 @@ class DeliveryTimeController extends Controller
         if ($deliveryTime) {
             return response()->json([
                 'success' => true,
-                'data' => $deliveryTime
+                'data' => $deliveryTime,
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => 'Delivery time not found.'
+            'message' => 'Delivery time not found.',
         ], 404);
     }
 
@@ -70,12 +70,12 @@ class DeliveryTimeController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Delivery time updated successfully!'
+                'message' => 'Delivery time updated successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update delivery time. Please try again.'
+                'message' => 'Failed to update delivery time. Please try again.',
             ], 500);
         }
     }
@@ -87,12 +87,12 @@ class DeliveryTimeController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Delivery time deleted successfully!'
+                'message' => 'Delivery time deleted successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete delivery time. Please try again.'
+                'message' => 'Failed to delete delivery time. Please try again.',
             ], 500);
         }
     }

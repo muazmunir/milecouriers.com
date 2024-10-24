@@ -9,12 +9,13 @@ use Yajra\Datatables\Datatables;
 class PaymentMethodRepository implements PaymentMethodInterface
 {
     private $payment_method;
+
     private $datatables;
 
     public function __construct()
     {
-        $this->payment_method = new PaymentMethod();
-        $this->datatables = new Datatables();
+        $this->payment_method = new PaymentMethod;
+        $this->datatables = new Datatables;
     }
 
     public function getDataTable()
@@ -26,10 +27,10 @@ class PaymentMethodRepository implements PaymentMethodInterface
                 $action = '<ul class="action">';
 
                 // Edit Payment Method (opens modal)
-                $action .= '<li class="edit"><a href="#" data-id="' . $paymentMethod->id . '" id="editPaymentMethod"><i class="icon-pencil-alt"></i></a></li>';
+                $action .= '<li class="edit"><a href="#" data-id="'.$paymentMethod->id.'" id="editPaymentMethod"><i class="icon-pencil-alt"></i></a></li>';
 
                 // Delete Payment Method (SweetAlert confirmation)
-                $action .= '<li class="delete"><a href="#" data-id="' . $paymentMethod->id . '" id="deletePaymentMethod"><i class="icon-trash"></i></a></li>';
+                $action .= '<li class="delete"><a href="#" data-id="'.$paymentMethod->id.'" id="deletePaymentMethod"><i class="icon-trash"></i></a></li>';
 
                 $action .= '</ul>';
 
@@ -52,12 +53,14 @@ class PaymentMethodRepository implements PaymentMethodInterface
     public function updatePaymentMethod($id, array $data)
     {
         $paymentMethod = $this->payment_method->find($id);
+
         return $paymentMethod ? $paymentMethod->update($data) : null;
-    }   
+    }
 
     public function deletePaymentMethod($id)
     {
         $paymentMethod = $this->payment_method->find($id);
+
         return $paymentMethod ? $paymentMethod->delete() : false;
     }
 }

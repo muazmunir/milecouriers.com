@@ -6,8 +6,8 @@ use App\Interfaces\UserInterface;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
-use Yajra\Datatables\Datatables;
 use Illuminate\Support\Str;
+use Yajra\Datatables\Datatables;
 
 class UserRepository implements UserInterface
 {
@@ -58,7 +58,7 @@ class UserRepository implements UserInterface
         $input = $request->all();
 
         if (empty($input['email'])) {
-            $input['email'] = 'user_' . time() . '@milecouriers.com';
+            $input['email'] = 'user_'.time().'@milecouriers.com';
         }
 
         if (empty($input['password'])) {
@@ -80,7 +80,7 @@ class UserRepository implements UserInterface
     public function updateUser($request, $id)
     {
         $input = $request->all();
-        
+
         if (! empty($input['password'])) {
             $input['password'] = $this->hash::make($input['password']);
         } else {
@@ -88,7 +88,7 @@ class UserRepository implements UserInterface
         }
 
         if (empty($input['email'])) {
-            $input['email'] = 'user_' . time() . '@milecouriers.com';
+            $input['email'] = 'user_'.time().'@milecouriers.com';
         }
 
         $this->user->find($id)->update($input);
@@ -109,5 +109,4 @@ class UserRepository implements UserInterface
         // Delete the user
         $user->delete();
     }
-
 }

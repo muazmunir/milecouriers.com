@@ -4,21 +4,23 @@ namespace App\Repositories;
 
 use App\Interfaces\RoleInterface;
 use App\Models\User;
+use Exception;
 use Spatie\Permission\Models\Role;
 use Yajra\Datatables\Datatables;
-use Exception;
 
 class RoleRepository implements RoleInterface
 {
     private $role;
+
     private $user;
+
     private $datatables;
 
     public function __construct()
     {
-        $this->role = new Role();
-        $this->user = new User();
-        $this->datatables = new Datatables();
+        $this->role = new Role;
+        $this->user = new User;
+        $this->datatables = new Datatables;
     }
 
     public function getDataTable()
@@ -35,13 +37,13 @@ class RoleRepository implements RoleInterface
                 $action = '<ul class="action">';
 
                 // Edit Role (opens modal)
-                $action .= '<li class="edit"><a href="#" data-id="' . $role->id . '" id="editRole"><i class="icon-pencil-alt"></i></a></li>';
+                $action .= '<li class="edit"><a href="#" data-id="'.$role->id.'" id="editRole"><i class="icon-pencil-alt"></i></a></li>';
 
                 // Assign Permissions to Role
                 // $action .= '<li class="assign"><a href="' . route('roles.permissions', $role->id) . '"><i class="icon-key"></i></a></li>';
 
                 // Delete Role (SweetAlert confirmation)
-                $action .= '<li class="delete"><a href="#" data-id="' . $role->id . '" id="deleteRole"><i class="icon-trash"></i></a></li>';
+                $action .= '<li class="delete"><a href="#" data-id="'.$role->id.'" id="deleteRole"><i class="icon-trash"></i></a></li>';
 
                 $action .= '</ul>';
 
@@ -59,6 +61,7 @@ class RoleRepository implements RoleInterface
     public function getUserRoles($user_id)
     {
         $user = $this->user->with('roles')->findOrFail($user_id);
+
         return $user->roles;
     }
 
@@ -68,9 +71,10 @@ class RoleRepository implements RoleInterface
             $this->role->create([
                 'name' => $data['name'],
             ]);
+
             return true;
         } catch (Exception $e) {
-            
+
             return false;
         }
     }
@@ -85,6 +89,7 @@ class RoleRepository implements RoleInterface
         try {
             $role = $this->role->findOrFail($id);
             $role->update(['name' => $data['name']]);
+
             return true;
         } catch (\Exception $e) {
             return false;
@@ -95,6 +100,7 @@ class RoleRepository implements RoleInterface
     {
         try {
             $role = $this->role->findOrFail($id);
+
             return $role->delete();
         } catch (\Exception $e) {
             return false;
@@ -106,6 +112,7 @@ class RoleRepository implements RoleInterface
         try {
             $role = $this->role->findOrFail($roleId);
             $role->syncPermissions($permissions); // Syncs the given permissions
+
             return true;
         } catch (\Exception $e) {
             return false;

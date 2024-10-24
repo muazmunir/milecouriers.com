@@ -9,12 +9,13 @@ use Yajra\Datatables\Datatables;
 class DeliveryStatusRepository implements DeliveryStatusInterface
 {
     private $delivery_status;
+
     private $datatables;
 
     public function __construct()
     {
-        $this->delivery_status = new DeliveryStatus();
-        $this->datatables = new Datatables();
+        $this->delivery_status = new DeliveryStatus;
+        $this->datatables = new Datatables;
     }
 
     public function getDataTable()
@@ -26,10 +27,10 @@ class DeliveryStatusRepository implements DeliveryStatusInterface
                 $action = '<ul class="action">';
 
                 // Edit Delivery Status (opens modal)
-                $action .= '<li class="edit"><a href="#" data-id="' . $deliveryStatus->id . '" id="editDeliveryStatus"><i class="icon-pencil-alt"></i></a></li>';
+                $action .= '<li class="edit"><a href="#" data-id="'.$deliveryStatus->id.'" id="editDeliveryStatus"><i class="icon-pencil-alt"></i></a></li>';
 
                 // Delete Delivery Status (SweetAlert confirmation)
-                $action .= '<li class="delete"><a href="#" data-id="' . $deliveryStatus->id . '" id="deleteDeliveryStatus"><i class="icon-trash"></i></a></li>';
+                $action .= '<li class="delete"><a href="#" data-id="'.$deliveryStatus->id.'" id="deleteDeliveryStatus"><i class="icon-trash"></i></a></li>';
 
                 $action .= '</ul>';
 
@@ -52,12 +53,14 @@ class DeliveryStatusRepository implements DeliveryStatusInterface
     public function updateDeliveryStatus($id, array $data)
     {
         $deliveryStatus = $this->delivery_status->find($id);
+
         return $deliveryStatus ? $deliveryStatus->update($data) : null;
     }
 
     public function deleteDeliveryStatus($id)
     {
         $deliveryStatus = $this->delivery_status->find($id);
+
         return $deliveryStatus ? $deliveryStatus->delete() : false;
     }
 }

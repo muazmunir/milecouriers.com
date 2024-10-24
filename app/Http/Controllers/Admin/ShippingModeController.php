@@ -36,12 +36,12 @@ class ShippingModeController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Shipping mode added successfully!'
+                'message' => 'Shipping mode added successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to add shipping mode. Please try again.'
+                'message' => 'Failed to add shipping mode. Please try again.',
             ], 500);
         }
     }
@@ -53,13 +53,13 @@ class ShippingModeController extends Controller
         if ($shippingMode) {
             return response()->json([
                 'success' => true,
-                'data' => $shippingMode
+                'data' => $shippingMode,
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => 'Shipping mode not found.'
+            'message' => 'Shipping mode not found.',
         ], 404);
     }
 
@@ -70,12 +70,12 @@ class ShippingModeController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Shipping mode updated successfully!'
+                'message' => 'Shipping mode updated successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update shipping mode. Please try again.'
+                'message' => 'Failed to update shipping mode. Please try again.',
             ], 500);
         }
     }
@@ -87,12 +87,12 @@ class ShippingModeController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Shipping mode deleted successfully!'
+                'message' => 'Shipping mode deleted successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete shipping mode. Please try again.'
+                'message' => 'Failed to delete shipping mode. Please try again.',
             ], 500);
         }
     }

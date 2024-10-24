@@ -9,12 +9,13 @@ use Yajra\Datatables\Datatables;
 class TypesOfPackingRepository implements TypesOfPackingInterface
 {
     private $types_of_packing;
+
     private $datatables;
 
     public function __construct()
     {
-        $this->types_of_packing = new TypesOfPacking();
-        $this->datatables = new Datatables();
+        $this->types_of_packing = new TypesOfPacking;
+        $this->datatables = new Datatables;
     }
 
     public function getDataTable()
@@ -26,10 +27,10 @@ class TypesOfPackingRepository implements TypesOfPackingInterface
                 $action = '<ul class="action">';
 
                 // Edit Types of Packing (opens modal)
-                $action .= '<li class="edit"><a href="#" data-id="' . $typesOfPacking->id . '" id="editPackingType"><i class="icon-pencil-alt"></i></a></li>';
+                $action .= '<li class="edit"><a href="#" data-id="'.$typesOfPacking->id.'" id="editPackingType"><i class="icon-pencil-alt"></i></a></li>';
 
                 // Delete Types of Packing (SweetAlert confirmation)
-                $action .= '<li class="delete"><a href="#" data-id="' . $typesOfPacking->id . '" id="deletePackingType"><i class="icon-trash"></i></a></li>';
+                $action .= '<li class="delete"><a href="#" data-id="'.$typesOfPacking->id.'" id="deletePackingType"><i class="icon-trash"></i></a></li>';
 
                 $action .= '</ul>';
 
@@ -52,12 +53,14 @@ class TypesOfPackingRepository implements TypesOfPackingInterface
     public function updatePackingType($id, array $data)
     {
         $typesOfPacking = $this->types_of_packing->find($id);
+
         return $typesOfPacking ? $typesOfPacking->update($data) : null;
-    }   
+    }
 
     public function deletePackingType($id)
     {
         $typesOfPacking = $this->types_of_packing->find($id);
+
         return $typesOfPacking ? $typesOfPacking->delete() : false;
     }
 }

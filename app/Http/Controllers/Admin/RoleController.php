@@ -36,12 +36,12 @@ class RoleController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Role added successfully!'
+                'message' => 'Role added successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to add role. Please try again.'
+                'message' => 'Failed to add role. Please try again.',
             ], 500);
         }
     }
@@ -53,13 +53,13 @@ class RoleController extends Controller
         if ($role) {
             return response()->json([
                 'success' => true,
-                'data' => $role
+                'data' => $role,
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => 'Role not found.'
+            'message' => 'Role not found.',
         ], 404);
     }
 
@@ -70,12 +70,12 @@ class RoleController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Role updated successfully!'
+                'message' => 'Role updated successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update role. Please try again.'
+                'message' => 'Failed to update role. Please try again.',
             ], 500);
         }
     }
@@ -87,14 +87,13 @@ class RoleController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Role deleted successfully!'
+                'message' => 'Role deleted successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete role. Please try again.'
+                'message' => 'Failed to delete role. Please try again.',
             ], 500);
         }
     }
-
 }

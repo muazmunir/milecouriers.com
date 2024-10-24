@@ -36,12 +36,12 @@ class PaymentMethodController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Payment method added successfully!'
+                'message' => 'Payment method added successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to add payment method. Please try again.'
+                'message' => 'Failed to add payment method. Please try again.',
             ], 500);
         }
     }
@@ -53,13 +53,13 @@ class PaymentMethodController extends Controller
         if ($paymentMethod) {
             return response()->json([
                 'success' => true,
-                'data' => $paymentMethod
+                'data' => $paymentMethod,
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => 'Payment method not found.'
+            'message' => 'Payment method not found.',
         ], 404);
     }
 
@@ -70,12 +70,12 @@ class PaymentMethodController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Payment method updated successfully!'
+                'message' => 'Payment method updated successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update payment method. Please try again.'
+                'message' => 'Failed to update payment method. Please try again.',
             ], 500);
         }
     }
@@ -87,12 +87,12 @@ class PaymentMethodController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Payment method deleted successfully!'
+                'message' => 'Payment method deleted successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete payment method. Please try again.'
+                'message' => 'Failed to delete payment method. Please try again.',
             ], 500);
         }
     }

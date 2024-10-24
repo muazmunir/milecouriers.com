@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\City;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
@@ -15,10 +14,11 @@ class CitySeeder extends Seeder
     public function run(): void
     {
         $jsonPath = database_path('data/cities.json');
-        
+
         // Check if the JSON file exists
-        if (!File::exists($jsonPath)) {
+        if (! File::exists($jsonPath)) {
             $this->command->error("The file {$jsonPath} does not exist.");
+
             return;
         }
 

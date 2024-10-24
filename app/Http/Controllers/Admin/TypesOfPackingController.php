@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TypesOfPackingRequest; 
-use App\Interfaces\TypesOfPackingInterface; 
+use App\Http\Requests\TypesOfPackingRequest;
+use App\Interfaces\TypesOfPackingInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 
@@ -36,12 +36,12 @@ class TypesOfPackingController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Packing type added successfully!'
+                'message' => 'Packing type added successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to add packing type. Please try again.'
+                'message' => 'Failed to add packing type. Please try again.',
             ], 500);
         }
     }
@@ -53,13 +53,13 @@ class TypesOfPackingController extends Controller
         if ($packingType) {
             return response()->json([
                 'success' => true,
-                'data' => $packingType
+                'data' => $packingType,
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => 'Packing type not found.'
+            'message' => 'Packing type not found.',
         ], 404);
     }
 
@@ -70,12 +70,12 @@ class TypesOfPackingController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Packing type updated successfully!'
+                'message' => 'Packing type updated successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update packing type. Please try again.'
+                'message' => 'Failed to update packing type. Please try again.',
             ], 500);
         }
     }
@@ -87,12 +87,12 @@ class TypesOfPackingController extends Controller
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Packing type deleted successfully!'
+                'message' => 'Packing type deleted successfully!',
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete packing type. Please try again.'
+                'message' => 'Failed to delete packing type. Please try again.',
             ], 500);
         }
     }
