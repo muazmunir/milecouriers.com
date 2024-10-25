@@ -56,6 +56,7 @@ Route::middleware('auth', 'verified', 'user-access:admin')->prefix('admin')->gro
     // Route to get senders
     Route::get('/fetch-users', [UserController::class, 'fetchUsers'])->name('fetch.users');
     Route::get('/fetch-user-address/{user_id}', [UserController::class, 'getUserAddress']);
+    Route::get('/fetch-recipient/{user_id}', [UserController::class, 'fetchRecipients'])->name('fetch.recipients');
     Route::CustomResource('users', UserController::class);
     Route::CustomResource('roles', RoleController::class);
     Route::CustomResource('delivery-times', DeliveryTimeController::class);

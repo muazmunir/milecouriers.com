@@ -129,4 +129,11 @@ class UserController extends Controller
             'message' => 'Sender or address not found'
         ], 404);
     }
+
+    public function fetchRecipients($user_id)
+    {
+        $users = User::whereNotNull('phone')->where('id', '!=', $user_id)->get();
+
+        return response()->json($users);
+    }
 }
