@@ -43,7 +43,7 @@ class ShipmentController extends Controller
         $pageTitle = 'Add Shipment';
         $delivery_times = DeliveryTime::all();
         $payment_methods = PaymentMethod::all();
-        $Shipping_modes = ShippingMode::all();
+        $shipping_modes = ShippingMode::all();
         $service_modes = ServiceMode::all();
         $delivery_statuses = DeliveryStatus::all();
         $type_of_packagings = TypesOfPacking::all();
@@ -53,7 +53,7 @@ class ShipmentController extends Controller
             'pageTitle',
             'delivery_times',
             'payment_methods',
-            'Shipping_modes',
+            'shipping_modes',
             'service_modes',
             'delivery_statuses',
             'type_of_packagings',
@@ -64,6 +64,7 @@ class ShipmentController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'shipment_number' => 'required',
             'sender_id' => 'required|exists:users,id',
             'recipient_id' => 'required|exists:users,id',
             'origin_address' => 'required|string|max:255',
@@ -85,6 +86,7 @@ class ShipmentController extends Controller
 
         // Step 2: Create the shipment
         $shipment = Shipment::create([
+            'shipment_number' => $validatedData['shipment_number'],
             'sender_id' => $validatedData['sender_id'],
             'recipient_id' => $validatedData['recipient_id'],
             'origin_address' => $validatedData['origin_address'],
@@ -110,4 +112,79 @@ class ShipmentController extends Controller
         // Step 4: Return a success response
         return redirect()->route('shipments.index')->with('success', 'Shipment created successfully.');
     }
+
+    public function edit($id): View
+    {
+        $pageTitle = 'Edit Shipment';
+        $shipment = Shipment::findOrFail($id); // Find the shipment by ID
+
+        // Retrieve options for dropdowns as before
+        $delivery_times = DeliveryTime::all();
+        $payment_methods = PaymentMethod::all();
+        $shipping_modes = ShippingMode::all();
+        $service_modes = ServiceMode::all();
+        $delivery_statuses = DeliveryStatus::all();
+        $type_of_packagings = TypesOfPacking::all();
+        $drivers = User::where('type', 2)->get();
+
+        return view('admin.shipments.form', compact(
+            'pageTitle',
+            'shipment',
+            'delivery_times',
+            'payment_methods',
+            'shipping_modes',
+            'service_modes',
+            'delivery_statuses',
+            'type_of_packagings',
+            'drivers',
+        ));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'origin_address' => 'required|string|max:255',
+            'destination_address' => 'required|string|max:255',
+            'delivery_time_id' => 'required|exists:delivery_times,id',
+            'payment_method_id' => 'required|exists:payment_methods,id',
+            'delivery_status_id' => 'required|exists:delivery_statuses,id',
+            'shipping_mode_id' => 'required|exists:shipping_modes,id',
+            'service_mode_id' => 'required|exists:service_modes,id',
+            'driver_id' => 'required|exists:users,id',
+            'description.*' => 'required|string|max:255',
+            'type_of_packaging.*' => 'required|exists:types_of_packings,id',
+            'weight.*' => 'required|numeric|min:0',
+            'length.*' => 'required|numeric|min:0',
+            'width.*' => 'required|numeric|min:0',
+            'height.*' => 'required|numeric|min:0',
+            'declared_value.*' => 'required|numeric|min:0',
+        ]);
+
+        // Step 2: Update shipment
+        $shipment = Shipment::findOrFail($id);
+        $shipment->update([
+            'origin_address' => $validatedData['origin_address'],
+            'destination_address' => $validatedData['destination_address'],
+            'driver_id' => $validatedData['driver_id'],
+            'shipment_date' => now(),
+        ]);
+
+        // Step 3: Update or create associated shipment items
+        $shipment->shipmentItems()->delete(); // Clear old items
+        foreach ($request->description as $index => $description) {
+            ShipmentItem::create([
+                'shipment_id' => $shipment->id,
+                'description' => $description,
+                'type_of_packaging_id' => $request->type_of_packaging[$index],
+                'weight' => $request->weight[$index],
+                'length' => $request->length[$index],
+                'width' => $request->width[$index],
+                'height' => $request->height[$index],
+                'declared_value' => $request->declared_value[$index],
+            ]);
+        }
+
+        return redirect()->route('shipments.index')->with('success', 'Shipment updated successfully.');
+    }
+
 }

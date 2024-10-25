@@ -2,17 +2,41 @@
 @section('title', $pageTitle)
 @section('content')
 <div class="container-fluid">
-    <form action="{{ route('shipments.store') }}" method="POST">
-        @csrf
+    <form action="{{ isset($shipment) ? route('shipments.update', $shipment->id) : route('shipments.store') }}" method="POST">
+    @csrf
+    @if(isset($shipment))
+            @method('PUT')
+        @endif
         <div class="row">
-        @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    @foreach ($errors->all() as $error)
-                        <p>{{ $error }}</p>
-                    @endforeach
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="" class="form-label">Delivery Status</label>
+                                <select name="delivery_status_id" class="form-select select2">
+                                    @foreach($delivery_statuses as $delivery_status)
+                                        <option value="{{ $delivery_status->id }}">{{ $delivery_status->name }}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="form-label">Tracking Number</label>
+                                <input type="text" name="shipment_number" id="shipment_number" class="form-control" value="{{ old('shipment_number', $shipment->shipment_number ?? '') }}" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            @endif
+            </div>
             <div class="col-md-6">
                  <div class="card">
                     <div class="card-header bg-primary pt-2 pb-2 align-items-center d-flex justify-content-between">
@@ -31,7 +55,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label for="" class="form-label">Sender/Customer Address</label>
-                                    <input type="text" readonly name="origin_address" id="sender-address" class="form-control">
+                                    <input type="text" name="origin_address" id="sender-address" class="form-control" required>
                                 </div>                            
                             </div>
                         </div>
@@ -56,7 +80,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label for="" class="form-label">Recipient/Client Address</label>
-                                    <input type="text" readonly name="destination_address" id="recipient-address" class="form-control">
+                                    <input type="text" name="destination_address" id="recipient-address" class="form-control">
                                 </div>                            
                             </div>
                         </div>
@@ -86,19 +110,11 @@
                                             <option value="{{ $payment_method->id }}">{{ $payment_method->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="" class="form-label">Delivery Status</label>
-                                    <select name="delivery_status_id" class="form-select select2">
-                                        @foreach($delivery_statuses as $delivery_status)
-                                            <option value="{{ $delivery_status->id }}">{{ $delivery_status->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                </div>                                
                                 <div class="col-md-4">
                                     <label for="" class="form-label">Shipping mode</label>
                                     <select name="shipping_mode_id" class="form-select select2">
-                                        @foreach($Shipping_modes as $Shipping_mode)
+                                        @foreach($shipping_modes as $Shipping_mode)
                                             <option value="{{ $Shipping_mode->id }}">{{ $Shipping_mode->name }}</option>
                                         @endforeach
                                     </select>
@@ -221,6 +237,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+     
+    
 $(document).ready(function() {
 
     function fetchUsers() {
@@ -230,7 +248,7 @@ $(document).ready(function() {
             success: function(data) {
                 let senderSelect = $('#senderSelect');
                 senderSelect.empty();  // Clear current options
-                senderSelect.append('<option value="" disabled>Select Sender</option>');
+                senderSelect.append('<option value="">Select Sender</option>');
                 
                 $.each(data, function(key, user) {
                     senderSelect.append(`<option value="${user.id}" data-address="${user.address}">${user.first_name} ${user.last_name} | ${user.phone}</option>`);
@@ -255,10 +273,11 @@ $(document).ready(function() {
             success: function(data) {
                 let recipientSelect = $('#recipientSelect');
                 recipientSelect.empty();  // Clear current options
-                recipientSelect.append('<option value="" disabled>Select Recipient</option>');
+                recipientSelect.append('<option value="">Select Recipient</option>');
 
                 $.each(data, function(key, user) {
                     recipientSelect.append(`<option value="${user.id}" data-address="${user.address}">${user.first_name} ${user.last_name} | ${user.phone}</option>`);
+
                 });
 
                 let selectedRecipient = recipientSelect.val();
@@ -324,6 +343,15 @@ $(document).ready(function() {
     });
     
 
+    $('#recipientSelect').change(function() {
+        let selectedReciepentId = $(this).val();  // Get selected sender ID
+        let selectedAddress = $(this).find(':selected').data('address');  // Get address from selected option
+
+        $('#recipient-address').val(selectedAddress);  // Set the address in the input field
+
+    });
+
+
     $('#senderSelect').change(function() {
         let selectedSenderId = $(this).val();  // Get selected sender ID
         let selectedAddress = $(this).find(':selected').data('address');  // Get address from selected option
@@ -333,6 +361,7 @@ $(document).ready(function() {
         // Fetch recipients excluding the selected sender ID
         fetchRecipients(selectedSenderId);
     });
+    
     
     $('.package-item:first').find('.remove-package').hide();
     // Function to add a new package
