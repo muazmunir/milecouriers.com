@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="" class="form-label">Delivery Status</label>
-                                <select name="delivery_status_id" class="form-select select2">
+                                <select name="status_id" class="form-select select2">
                                     @foreach($delivery_statuses as $delivery_status)
                                         <option value="{{ $delivery_status->id }}">{{ $delivery_status->name }}</option>
                                     @endforeach
@@ -99,7 +99,7 @@
                                     <label for="" class="form-label">Delivery time</label>
                                     <select name="delivery_time_id" class="form-select select2">
                                         @foreach($delivery_times as $delivery_time)
-                                            <option value="{{ $delivery_time->id }}">{{ $delivery_time->delivery_time }}</option>
+                                            <option value="{{ $delivery_time->id }}" <?php if(isset($shipment) && $shipment->delivery_time_id == $delivery_time->id) { echo 'selected'; } ?> >{{ $delivery_time->delivery_time }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -107,7 +107,7 @@
                                     <label for="" class="form-label">Payment Methods</label>
                                     <select name="payment_method_id" class="form-select select2">
                                         @foreach($payment_methods as $payment_method)
-                                            <option value="{{ $payment_method->id }}">{{ $payment_method->name }}</option>
+                                            <option value="{{ $payment_method->id }}" <?php if(isset($shipment) && $shipment->payment_method_id == $payment_method->id) { echo 'selected'; } ?> >{{ $payment_method->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>                                
@@ -115,7 +115,7 @@
                                     <label for="" class="form-label">Shipping mode</label>
                                     <select name="shipping_mode_id" class="form-select select2">
                                         @foreach($shipping_modes as $Shipping_mode)
-                                            <option value="{{ $Shipping_mode->id }}">{{ $Shipping_mode->name }}</option>
+                                            <option value="{{ $Shipping_mode->id }}" <?php if(isset($shipment) && $shipment->shipping_mode_id == $Shipping_mode->id) { echo 'selected'; } ?> >{{ $Shipping_mode->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -124,7 +124,7 @@
                                     <label for="" class="form-label">Service Mode</label>
                                     <select name="service_mode_id" class="form-select select2">
                                         @foreach($service_modes as $service_mode)
-                                            <option value="{{ $service_mode->id }}">{{ $service_mode->name }}</option>
+                                            <option value="{{ $service_mode->id }}" <?php if(isset($shipment) && $shipment->service_mode_id == $service_mode->id) { echo 'selected'; } ?> >{{ $service_mode->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -132,7 +132,7 @@
                                     <label for="" class="form-label">Assign Driver</label>
                                     <select name="driver_id" class="form-select select2">
                                         @foreach($drivers as $driver)
-                                            <option value="{{ $driver->id }}">{{ $driver->first_name }} {{ $driver->last_name }}</option>
+                                            <option value="{{ $driver->id }}" <?php if(isset($shipment) && $shipment->driver_id == $driver->id) { echo 'selected'; } ?> >{{ $driver->first_name }} {{ $driver->last_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -227,7 +227,9 @@
     
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <div class="col-md-12 text-end">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
         </div>
     </form>
 </div>

@@ -18,7 +18,12 @@ class Shipment extends Model
         'shipment_date',
         'estimated_delivery_date',
         'actual_delivery_date',
-        'status',
+        'status_id',
+        'delivery_time_id',
+        'payment_method_id',
+        'shipping_mode_id',
+        'service_mode_id',
+        'driver_id'
     ];
 
     public function sender()

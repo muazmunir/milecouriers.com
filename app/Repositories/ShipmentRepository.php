@@ -20,9 +20,29 @@ class ShipmentRepository implements ShipmentInterface
 
     public function getDataTable()
     {
-        $query = $this->shipment->query();
+        $query = $this->shipment->with('sender')->with('recipient');
 
         return $this->datatables->of($query)
+            ->addColumn('action', function ($shipment) {
+                $action = '<ul class="action">';
+
+                // Edit Shipment (opens modal)
+                $action .= '<li class="edit"><a href="'.route('shipments.edit', $shipment->id).'"><i class="icon-pencil-alt"></i></a></li>';
+
+                // Delete Shipment (SweetAlert confirmation)
+                $action .= '<li class="delete"><a href="#" data-id="'.$shipment->id.'" id="deleteShipment"><i class="icon-trash"></i></a></li>';
+
+                $action .= '</ul>';
+
+                return $action;
+            })
+            ->addColumn('sender', function ($shipment) {
+                return $shipment->sender->full_name;
+            })
+            ->addColumn('recipient', function ($shipment) {
+                return $shipment->recipient->full_name;
+            })
+            ->rawColumns(['action'])
             ->toJson();
     }
 }

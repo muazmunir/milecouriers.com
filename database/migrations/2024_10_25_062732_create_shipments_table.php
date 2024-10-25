@@ -21,7 +21,12 @@ return new class extends Migration
             $table->date('shipment_date');
             $table->date('estimated_delivery_date')->nullable();
             $table->date('actual_delivery_date')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->unsignedBigInteger('delivery_time_id')->nullable();
+            $table->unsignedBigInteger('payment_method_id')->nullable();
+            $table->unsignedBigInteger('shipping_mode_id')->nullable();
+            $table->unsignedBigInteger('service_mode_id')->nullable();
+            $table->unsignedBigInteger('driver_id')->nullable();
             $table->timestamps();
         });
     }

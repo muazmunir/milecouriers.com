@@ -69,9 +69,9 @@ class ShipmentController extends Controller
             'recipient_id' => 'required|exists:users,id',
             'origin_address' => 'required|string|max:255',
             'destination_address' => 'required|string|max:255',
+            'status_id' => 'required|exists:delivery_statuses,id',
             'delivery_time_id' => 'required|exists:delivery_times,id',
             'payment_method_id' => 'required|exists:payment_methods,id',
-            'delivery_status_id' => 'required|exists:delivery_statuses,id',
             'shipping_mode_id' => 'required|exists:shipping_modes,id',
             'service_mode_id' => 'required|exists:service_modes,id',
             'driver_id' => 'required|exists:users,id',
@@ -91,6 +91,10 @@ class ShipmentController extends Controller
             'recipient_id' => $validatedData['recipient_id'],
             'origin_address' => $validatedData['origin_address'],
             'destination_address' => $validatedData['destination_address'],
+            'status_id' => $validatedData['status_id'],
+            'payment_method_id' => $validatedData['payment_method_id'],
+            'shipping_mode_id' => $validatedData['shipping_mode_id'],
+            'service_mode_id' => $validatedData['service_mode_id'],
             'driver_id' => $validatedData['driver_id'],
             'shipment_date' => now(),
         ]);
@@ -116,7 +120,7 @@ class ShipmentController extends Controller
     public function edit($id): View
     {
         $pageTitle = 'Edit Shipment';
-        $shipment = Shipment::findOrFail($id); // Find the shipment by ID
+        $shipment = Shipment::with('items')->findOrFail($id); // Find the shipment by ID
 
         // Retrieve options for dropdowns as before
         $delivery_times = DeliveryTime::all();
@@ -187,4 +191,19 @@ class ShipmentController extends Controller
         return redirect()->route('shipments.index')->with('success', 'Shipment updated successfully.');
     }
 
+    public function destroy($id): JsonResponse
+    {
+        $shipment = Shipment::findOrFail($id);
+
+        // Delete related shipment items
+        $shipment->items()->delete();
+
+        // Delete the shipment
+        $shipment->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Shipment deleted successfully.'
+        ]);
+    }
 }

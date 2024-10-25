@@ -28,6 +28,7 @@
                                     <th>Origin</th>
                                     <th>Destination</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -56,15 +57,16 @@
             columns: [
                 { data: 'shipment_number', name: 'shipment_number' },
                 { data: 'shipment_date', name: 'shipment_date' },
-                { data: 'sender_id', name: 'sender_id' },
-                { data: 'recipient_id', name: 'recipient_id' },
+                { data: 'sender', name: 'sender' },
+                { data: 'recipient', name: 'recipient' },
                 { data: 'origin_address', name: 'origin_address' },
                 { data: 'destination_address', name: 'destination_address' },
                 { data: 'status', name: 'status' },
+                { data: 'action', name: 'action' },
             ],
         });
             // Delete Service Mode
-        $(document).on('click', '#deleteServiceMode', function (e) {
+        $(document).on('click', '#deleteShipment', function (e) {
             e.preventDefault();
             var serviceModeId = $(this).data('id');
 
@@ -81,7 +83,7 @@
                 if (result.isConfirmed) {
                     // Perform the delete AJAX request
                     $.ajax({
-                        url: '/admin/service-modes/' + serviceModeId,
+                        url: '/admin/shipments/' + serviceModeId,
                         type: 'DELETE',
                         data: {
                             _token: '{{ csrf_token() }}' // Include CSRF token for security
@@ -99,7 +101,7 @@
                         error: function (xhr) {
                             Swal.fire(
                                 'Error!',
-                                'There was an error deleting the service mode. Please try again.',
+                                'There was an error deleting the shipment. Please try again.',
                                 'error'
                             );
                         }
