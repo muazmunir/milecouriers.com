@@ -8,20 +8,21 @@
                 <div class="card-header bg-primary pt-2 pb-2 align-items-center d-flex justify-content-between">
                     <h4 class="text-white mb-0">Sender Information</h4>
                     <!-- Refresh Button -->
-                    <button id="refreshUsers" class="btn btn-square btn-outline-light">Refresh Users</button>
+                    <button id="refreshUsers" class="text-white btn border border-white">Refresh</button>
                 </div>
                 <div class="card-body">
                     <div class="card-wrapper border rounded-3">
                         <div class="row g-3">
                             <div class="col-md-12">
-                                <label for="" class="form-label">Sender/Customer</label>
+                                <label for="senderSelect" class="form-label">Sender/Customer</label>
+                                <a href="{{ route('users.create') }}" target="_blank" class="btn btn-primary float-end">Add New</a>
                                 <select name="sender_id" id="senderSelect" class="form-select select2">
                                     <option value="" selected disabled>Select Sender</option>
                                 </select>
                             </div>
                             <div class="col-md-12">
                                 <label for="" class="form-label">Sender/Customer Address</label>
-                                <input type="text" class="form-control">
+                                <input type="text" id="sender-address" class="form-control">
                             </div>                            
                         </div>
                     </div>
@@ -201,6 +202,8 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 $(document).ready(function() {
 
@@ -214,11 +217,50 @@ $(document).ready(function() {
                 senderSelect.append('<option value="" disabled>Select Sender</option>');
                 
                 $.each(data, function(key, user) {
-                    senderSelect.append(`<option value="${user.id}">${user.first_name} ${user.last_name} | ${user.phone}</option>`);
+                    senderSelect.append(`<option value="${user.id}" data-address="${user.address}">${user.first_name} ${user.last_name} | ${user.phone}</option>`);
                 });
+
+                // If a sender is already selected, trigger the change event to load the address
+                let selectedSender = senderSelect.val();
+                if (selectedSender) {
+                    fetchSenderAddress(selectedSender);
+                }
             },
             error: function() {
                 alert('Failed to fetch users. Please try again.');
+            }
+        });
+    }
+
+    function fetchRecipients(excludedSenderId) {
+        $.ajax({
+            url: '{{ route("fetch.users") }}',
+            type: 'GET',
+            success: function(data) {
+                let recipientSelect = $('#recipientSelect');
+                recipientSelect.empty();  // Clear current options
+                recipientSelect.append('<option value="" disabled>Select Recipient</option>');
+
+                $.each(data, function(key, user) {
+                    recipientSelect.append(`<option value="${user.id}" data-address="${user.address}">${user.first_name} ${user.last_name} | ${user.phone}</option>`);
+                });
+            },
+            error: function() {
+                alert('Failed to fetch recipients. Please try again.');
+            }
+        });
+    }
+    // Initial fetch when page loads
+    function fetchSenderAddress(senderId) {
+        $.ajax({
+            url: `/admin/fetch-user-address/${senderId}`,
+            type: 'GET',
+            success: function(data) {
+                $('#sender-address').val(data.address);
+                fetchRecipients(senderId);
+            },
+            error: function() {
+                alert('Failed to fetch sender address.');
             }
         });
     }
@@ -229,6 +271,22 @@ $(document).ready(function() {
     // Refresh users on button click
     $('#refreshUsers').click(function() {
         fetchUsers();
+        Swal.fire({
+            title: 'Success!',
+            text: 'The sender list has been refreshed.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    });
+
+    $('#senderSelect').change(function() {
+        let selectedSenderId = $(this).val();  // Get selected sender ID
+        let selectedAddress = $(this).find(':selected').data('address');  // Get address from selected option
+
+        $('#sender-address').val(selectedAddress);  // Set the address in the input field
+
+        // Fetch recipients excluding the selected sender ID
+        fetchRecipients(selectedSenderId);
     });
     
     $('.package-item:first').find('.remove-package').hide();

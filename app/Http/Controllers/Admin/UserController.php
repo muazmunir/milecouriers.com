@@ -106,8 +106,27 @@ class UserController extends Controller
 
     public function fetchUsers()
     {
-        $users = User::where('type', 2)->whereNotNull('phone')->get();
+        $users = User::whereNotNull('phone')->get();
 
         return response()->json($users);
+    }
+
+    public function getUserAddress($user_id)
+    {
+        $user = User::find($user_id);
+
+        // Check if user exists and has an address
+        if ($user && $user->address) {
+            return response()->json([
+                'success' => true,
+                'address' => $user->address
+            ]);
+        }
+
+        // If user or address is not found, return an error
+        return response()->json([
+            'success' => false,
+            'message' => 'Sender or address not found'
+        ], 404);
     }
 }
