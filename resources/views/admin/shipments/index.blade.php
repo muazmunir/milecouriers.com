@@ -27,11 +27,7 @@
                                     <th>Recipient</th>
                                     <th>Origin</th>
                                     <th>Destination</th>
-                                    <th>Payment</th>
                                     <th>Status</th>
-                                    <th>Total cost</th>
-                                    <th>Invoice Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -58,9 +54,13 @@
             serverSide: true,
             ajax: "{{ route('shipments.dataTable') }}", // Adjust the route as necessary
             columns: [
-                { data: 'id', name: 'id' },
-                { data: 'name', name: 'name' },
-                { data: 'action', name: 'action' },
+                { data: 'shipment_number', name: 'shipment_number' },
+                { data: 'shipment_date', name: 'shipment_date' },
+                { data: 'sender_id', name: 'sender_id' },
+                { data: 'recipient_id', name: 'recipient_id' },
+                { data: 'origin_address', name: 'origin_address' },
+                { data: 'destination_address', name: 'destination_address' },
+                { data: 'status', name: 'status' },
             ],
         });
             // Delete Service Mode

@@ -5,6 +5,14 @@
     <form action="{{ route('shipments.store') }}" method="POST">
         @csrf
         <div class="row">
+        @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="col-md-6">
                  <div class="card">
                     <div class="card-header bg-primary pt-2 pb-2 align-items-center d-flex justify-content-between">
