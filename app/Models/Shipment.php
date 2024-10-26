@@ -36,6 +36,11 @@ class Shipment extends Model
         return $this->belongsTo(User::class, 'recipient_id');
     }
 
+    public function status()
+    {
+        return $this->belongsTo(DeliveryStatus::class, 'status_id');
+    }
+
     public function items()
     {
         return $this->hasMany(ShipmentItem::class);

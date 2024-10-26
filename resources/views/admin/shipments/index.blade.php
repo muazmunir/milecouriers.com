@@ -17,6 +17,34 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
+                    <div class="row mb-4">
+                        <div class="col-md-4 form-group">
+                            <label for="name">Tracking #</label>
+                            <input type="text" id="name" class="form-control" placeholder="Enter tracking number">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="">Start Date</label>
+                            <input type="date" id="start_date" class="form-control" placeholder="Start Date">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="">End Date</label>
+                            <input type="date" id="end_date" class="form-control" placeholder="End Date">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="status">Status:</label>
+                            <select id="status" class="form-control select2">
+                                <option value="">All</option>
+                                @foreach($delivery_statuses as $delivery_status)
+                                <option value="{{ $delivery_status->id }}">{{ $delivery_status->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4 form-group mt-4">
+                            <button id="searchButton" class="btn btn-primary mt-2">Search</button>
+                            <button id="clearFilters" class="btn btn-secondary mt-2">Clear Filters</button>
+                        </div>
+
+                    </div>
                     <div class="table-responsive custom-scrollbar">
                         <table class="display" id="service_mode_datatable">
                             <thead>
@@ -53,6 +81,7 @@
         var table = $("#service_mode_datatable").DataTable({
             processing: true,
             serverSide: true,
+            searching: false,
             ajax: "{{ route('shipments.dataTable') }}", // Adjust the route as necessary
             columns: [
                 { data: 'shipment_number', name: 'shipment_number' },

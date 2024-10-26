@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('shipment_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shipment_id')->constrained('shipments')->onDelete('cascade'); // Foreign key to shipments
+            $table->unsignedBigInteger('shipment_id')->constrained('shipments')->onDelete('cascade'); // Foreign key to shipments
             $table->string('description'); // Package description
-            $table->foreignId('type_of_packaging_id')->constrained('packaging_types')->onDelete('cascade'); // Foreign key to packaging types
+            $table->unsignedBigInteger('type_of_packaging_id'); // Foreign key to packaging types
             $table->decimal('weight', 8, 2)->default(0); // Weight
             $table->decimal('length', 8, 2)->default(0); // Length
             $table->decimal('width', 8, 2)->default(0); // Width

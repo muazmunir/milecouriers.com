@@ -30,7 +30,9 @@ class ShipmentController extends Controller
     {
         $pageTitle = 'Shipments';
 
-        return view('admin.shipments.index', compact('pageTitle'));
+        $delivery_statuses = DeliveryStatus::all();
+
+        return view('admin.shipments.index', compact('pageTitle', 'delivery_statuses'));
     }
 
     public function dataTable(): JsonResponse

@@ -20,9 +20,19 @@ class ShipmentRepository implements ShipmentInterface
 
     public function getDataTable()
     {
-        $query = $this->shipment->with('sender')->with('recipient');
+        $query = $this->shipment->with(['sender','recipient', 'status']);
 
         return $this->datatables->of($query)
+            
+            ->addColumn('sender', function ($shipment) {
+                return $shipment->sender->full_name;
+            })
+            ->addColumn('recipient', function ($shipment) {
+                return $shipment->recipient->full_name;
+            })
+            ->addColumn('status', function ($shipment) {
+                return $shipment->status->name;
+            })
             ->addColumn('action', function ($shipment) {
                 $action = '<ul class="action">';
 
@@ -36,13 +46,7 @@ class ShipmentRepository implements ShipmentInterface
 
                 return $action;
             })
-            ->addColumn('sender', function ($shipment) {
-                return $shipment->sender->full_name;
-            })
-            ->addColumn('recipient', function ($shipment) {
-                return $shipment->recipient->full_name;
-            })
-            ->rawColumns(['action'])
+            ->rawColumns(['sender', 'recipient', 'status', 'action'])
             ->toJson();
     }
 }
