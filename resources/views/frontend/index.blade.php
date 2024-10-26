@@ -44,6 +44,38 @@
 </div>
 <!-- Carousel End -->
 
+<div class="container mt-5">
+    <h3>Shipment Tracking</h3>
+
+    <!-- Input form for tracking number -->
+    <form id="tracking-form" class="mb-4">
+        <div class="input-group">
+            <input type="text" id="tracking-number-input" class="form-control" placeholder="Enter Tracking Number" required>
+            <button type="submit" class="btn btn-primary">Track Shipment</button>
+        </div>
+    </form>
+
+    <!-- Tracking Details Display -->
+    <div id="tracking-details" class="card mb-3" style="display: none;">
+        <div class="card-body">
+            <h5>Shipment Booking Details</h5>
+            <p><strong>Tracking Number:</strong> <span id="tracking-number"></span></p>
+            <p><strong>Origin:</strong> <span id="origin"></span></p>
+            <p><strong>Destination:</strong> <span id="destination"></span></p>
+            <p><strong>Booking Date:</strong> <span id="booking-date"></span></p>
+            <p><strong>Current Status:</strong> <span id="current-status"></span></p>
+            <p><strong>Delivered On:</strong> <span id="delivered-on"></span></p>
+            <p><strong>Received By:</strong> <span id="received-by"></span></p>
+        </div>
+    </div>
+
+    <!-- Track History Display -->
+    <h5>Track History</h5>
+    <div id="track-history" class="list-group" style="display: none;">
+        <!-- History entries will be dynamically added here -->
+    </div>
+</div>
+
 
 <!-- About Start -->
 <div class="container-fluid overflow-hidden py-5 px-lg-0" id="about-section">

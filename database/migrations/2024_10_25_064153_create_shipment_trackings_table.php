@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('shipment_id')->constrained('shipments')->onDelete('cascade'); // Foreign key linking to shipments table
             $table->string('location'); // The location of the shipment
             $table->timestamp('tracked_at'); // The timestamp of when the tracking information was recorded
-            $table->tinyInteger('status'); // Status of the shipment (can use ENUM for predefined statuses)
+            $table->unsignedBigInteger('status')->nullable(); // Status of the shipment (can use ENUM for predefined statuses)
             $table->text('notes')->nullable();
             $table->timestamps();
         });

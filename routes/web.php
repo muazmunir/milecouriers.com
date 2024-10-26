@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/shipment/{id}/tracking', [HomeController::class, 'showTracking'])->name('shipment.tracking');
+
 
 require __DIR__.'/auth.php';
 

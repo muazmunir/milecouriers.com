@@ -9,8 +9,11 @@ use App\Models\DeliveryStatus;
 use App\Models\DeliveryTime;
 use App\Models\PaymentMethod;
 use App\Models\ServiceMode;
+use App\Models\ShipmentStatusHistory;
+use App\Models\ShipmentTracking;
 use App\Models\ShippingMode;
 use App\Models\TypesOfPacking;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -63,6 +66,26 @@ class ShipmentSeeder extends Seeder
                     'width' => rand(1, 50),
                     'height' => rand(1, 50),
                     'declared_value' => rand(100, 1000),
+                ]);
+            }
+
+
+            foreach (range(1, rand(1, 5)) as $k) {
+                ShipmentTracking::create([
+                    'shipment_id' => $shipment->id,
+                    'location' => 'Location ' . $k,
+                    'tracked_at' => Carbon::now()->subDays(rand(0, 10))->toDateTimeString(),
+                    'status' => 1,
+                    'notes' => 'Note for tracking entry ' . $k,
+                ]);
+            }
+
+            // Add status history entries for the shipment
+            foreach (range(1, rand(1, 3)) as $l) {
+                ShipmentStatusHistory::create([
+                    'shipment_id' => $shipment->id,
+                    'status' => $l,
+                    'status_description' => 'Description for status ' . $l,
                 ]);
             }
         }

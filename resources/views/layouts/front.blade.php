@@ -139,6 +139,50 @@
 
     <!-- Template Javascript -->
     <script src="/frontend/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+    $('#tracking-form').on('submit', function(e) {
+        e.preventDefault(); // Prevent form from submitting normally
+
+        const trackingNumber = $('#tracking-number-input').val();
+
+        $.get(`/shipment/${trackingNumber}/tracking`, function(data) {
+            // Display tracking details
+            $('#tracking-number').text(data.trackingNumber);
+            $('#origin').text(data.origin);
+            $('#destination').text(data.destination);
+            $('#booking-date').text(data.bookingDate);
+            $('#current-status').text(data.currentStatus);
+            $('#delivered-on').text(data.deliveredOn);
+            $('#received-by').text(data.receivedBy);
+
+            // Display tracking details card
+            $('#tracking-details').show();
+
+            // Populate track history
+            $('#track-history').empty();
+            data.trackHistory.forEach(function(history) {
+                $('#track-history').append(`
+                    <div class="list-group-item">
+                        <p><strong>Date:</strong> ${history.date}</p>
+                        <p><strong>Time:</strong> ${history.time}</p>
+                        <p><strong>Status:</strong> ${history.status}</p>
+                        ${history.location ? `<p><strong>Location:</strong> ${history.location}</p>` : ''}
+                    </div>
+                `);
+            });
+
+            // Display track history section
+            $('#track-history').show();
+        }).fail(function() {
+            alert("Tracking information not found. Please check the tracking number.");
+            $('#tracking-details').hide();
+            $('#track-history').hide();
+        });
+    });
+});
+    </script>
 </body>
 
 </html>
