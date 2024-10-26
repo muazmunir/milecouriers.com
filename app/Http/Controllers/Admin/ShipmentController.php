@@ -133,7 +133,7 @@ class ShipmentController extends Controller
         $type_of_packagings = TypesOfPacking::all();
         $drivers = User::where('type', 2)->get();
 
-        return view('admin.shipments.form', compact(
+        return view('admin.shipments.edit', compact(
             'pageTitle',
             'shipment',
             'delivery_times',
@@ -169,6 +169,7 @@ class ShipmentController extends Controller
         // Step 2: Update shipment
         $shipment = Shipment::findOrFail($id);
         $shipment->update([
+            'status_id' => $validatedData['delivery_status_id'],
             'origin_address' => $validatedData['origin_address'],
             'destination_address' => $validatedData['destination_address'],
             'driver_id' => $validatedData['driver_id'],
@@ -176,7 +177,7 @@ class ShipmentController extends Controller
         ]);
 
         // Step 3: Update or create associated shipment items
-        $shipment->shipmentItems()->delete(); // Clear old items
+        $shipment->items()->delete(); // Clear old items
         foreach ($request->description as $index => $description) {
             ShipmentItem::create([
                 'shipment_id' => $shipment->id,
