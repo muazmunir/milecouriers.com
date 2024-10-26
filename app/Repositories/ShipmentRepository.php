@@ -18,9 +18,28 @@ class ShipmentRepository implements ShipmentInterface
         $this->datatables = new Datatables;
     }
 
-    public function getDataTable()
+    public function getDataTable($request)
     {
         $query = $this->shipment->with(['sender','recipient', 'status']);
+
+        if ($request->has('shipment_number') && ! empty($request->get('shipment_number'))) {
+            $query->where('shipment_number', 'like', '%'.$request->input('shipment_number').'%');
+        }
+
+        if ($request->has('start_date') && ! empty($request->get('start_date'))) {
+            $query->whereDate('shipment_date', '>=', $request->get('start_date'));
+        }
+
+        // Apply the end date filter if it exists
+        if ($request->has('end_date') && ! empty($request->get('end_date'))) {
+            $query->whereDate('shipment_date', '<=', $request->get('end_date'));
+        }
+
+        if ($request->has('status_id') && ! empty($request->get('status_id'))) {
+            $query->whereHas('status', function ($q) use ($request) {
+                $q->where('id', $request->get('status_id'));
+            });
+        }
 
         return $this->datatables->of($query)
             

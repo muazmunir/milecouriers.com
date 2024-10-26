@@ -19,8 +19,8 @@
                     @endif
                     <div class="row mb-4">
                         <div class="col-md-4 form-group">
-                            <label for="name">Tracking #</label>
-                            <input type="text" id="name" class="form-control" placeholder="Enter tracking number">
+                            <label for="shipment_number">Tracking #</label>
+                            <input type="text" id="shipment_number" class="form-control" placeholder="Enter tracking number">
                         </div>
                         <div class="col-md-4 form-group">
                             <label for="">Start Date</label>
@@ -31,8 +31,8 @@
                             <input type="date" id="end_date" class="form-control" placeholder="End Date">
                         </div>
                         <div class="col-md-4 form-group">
-                            <label for="status">Status:</label>
-                            <select id="status" class="form-control select2">
+                            <label for="status_id">Status:</label>
+                            <select id="status_id" class="form-control select2">
                                 <option value="">All</option>
                                 @foreach($delivery_statuses as $delivery_status)
                                 <option value="{{ $delivery_status->id }}">{{ $delivery_status->name }}</option>
@@ -82,7 +82,15 @@
             processing: true,
             serverSide: true,
             searching: false,
-            ajax: "{{ route('shipments.dataTable') }}", // Adjust the route as necessary
+            ajax: {
+                url: "{{ route('shipments.dataTable') }}",
+                data: function (d) {
+                    d.shipment_number = $('#shipment_number').val();
+                    d.start_date = $('#start_date').val();
+                    d.end_date = $('#end_date').val();
+                    d.status_id = $('#status_id').val();
+                }
+            },
             columns: [
                 { data: 'shipment_number', name: 'shipment_number' },
                 { data: 'shipment_date', name: 'shipment_date' },
@@ -94,6 +102,14 @@
                 { data: 'action', name: 'action' },
             ],
         });
+
+        $('#searchButton').on('click', function () {
+            table.draw();
+        });
+        $('#clearFilters').on('click', function () {
+            $('#shipment_number, #start_date, #end_date, #status_id').val('');
+            table.draw();
+        })
             // Delete Service Mode
         $(document).on('click', '#deleteShipment', function (e) {
             e.preventDefault();

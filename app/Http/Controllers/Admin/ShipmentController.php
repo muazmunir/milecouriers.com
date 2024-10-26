@@ -35,9 +35,9 @@ class ShipmentController extends Controller
         return view('admin.shipments.index', compact('pageTitle', 'delivery_statuses'));
     }
 
-    public function dataTable(): JsonResponse
+    public function dataTable(Request $request): JsonResponse
     {
-        return $this->shipmentRepository->getDataTable();
+        return $this->shipmentRepository->getDataTable($request);
     }
 
     public function create(): View
@@ -72,6 +72,7 @@ class ShipmentController extends Controller
             'origin_address' => 'required|string|max:255',
             'destination_address' => 'required|string|max:255',
             'status_id' => 'required|exists:delivery_statuses,id',
+            'delivery_status_id' => 'required|exists:delivery_statuses,id',
             'delivery_time_id' => 'required|exists:delivery_times,id',
             'payment_method_id' => 'required|exists:payment_methods,id',
             'shipping_mode_id' => 'required|exists:shipping_modes,id',
