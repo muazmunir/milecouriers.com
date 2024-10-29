@@ -226,6 +226,8 @@ class ShipmentController extends Controller
             ['shipment_id' => $shipment_id]
         ));
 
+        Shipment::find($shipment_id)->update(['status_id' => $request->status_id]);
+
         return redirect()->route('shipments.edit', $shipment_id)->with('success', 'Shipment tracking updated successfully.');
     }
 }
