@@ -23,9 +23,7 @@
                             <div class="col-md-6">
                                 <label for="" class="form-label">Delivery Status</label>
                                 <select name="delivery_status_id" class="form-select select2">
-                                    @foreach($delivery_statuses as $delivery_status)
-                                        <option value="{{ $delivery_status->id }}" <?php if(isset($shipment) && $shipment->status_id == $delivery_status->id ) { echo 'selected'; } ?>>{{ $delivery_status->name }}</option>
-                                    @endforeach
+                                    <option value="{{ $shipment->status_id }}">{{ $shipment->status->name }}</option>
                                 </select>
 
                             </div>
@@ -217,17 +215,84 @@
                             @endif
 
                         </div>
+                        <!-- <button type="submit" class="btn btn-primary">Save</button> -->
                     </div>
 
 
     
                 </div>
             </div>
-            <div class="col-md-12 text-end">
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
         </div>
     </form>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Shipment Tracking Update Form -->
+                    <form method="POST" action="{{ route('shipments.tracking', $shipment->id) }}">
+                        @csrf
+
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" name="location" id="location" class="form-control" placeholder="Enter current location" required value="{{ old('location', $shipment->shipmentTracking->location ?? '') }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tracked_at">Tracking Date</label>
+                            <input type="datetime-local" name="tracked_at" id="tracked_at" class="form-control" required value="{{ old('tracked_at', $shipment->shipmentTracking->tracked_at ?? '') }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select name="status_id" class="form-select select2">
+                                @foreach($delivery_statuses as $delivery_status)
+                                    <option value="{{ $delivery_status->id }}">{{ $delivery_status->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Notes</label>
+                            <textarea name="notes" id="notes" class="form-control" rows="3" placeholder="Enter additional notes">{{ old('notes', $shipment->shipmentTracking->notes ?? '') }}</textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">Update Tracking</button>
+                    </form>
+
+                </div>
+            </div>
+            <div class="card">  
+                <div class="card-header bg-primary pt-2 pb-2 d-flex justify-content-between align-items-center">
+                    <h4 class="text-white mb-0">Tracking History</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Location</th>
+                                <th>Tracking Date</th>
+                                <th>Status</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($shipment->tracking as $index => $row)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $row->location }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($row->tracked_at)->format('d M Y, H:i') }}</td>
+                                    <td>{{ $row->status->name }}</td>
+                                    <td>{{ $row->notes }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 @endsection
 

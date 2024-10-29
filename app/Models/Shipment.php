@@ -46,11 +46,6 @@ class Shipment extends Model
         return $this->hasMany(ShipmentItem::class);
     }
 
-    public function statusHistories()
-    {
-        return $this->hasMany(ShipmentStatusHistory::class);
-    }
-
     public function tracking()
     {
         return $this->hasMany(ShipmentTracking::class);

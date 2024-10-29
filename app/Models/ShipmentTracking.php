@@ -13,12 +13,17 @@ class ShipmentTracking extends Model
         'shipment_id',
         'location',
         'tracked_at',
-        'status',
+        'status_id',
         'notes',
     ];
 
     public function shipment()
     {
         return $this->belongsTo(Shipment::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(DeliveryStatus::class, 'status_id');
     }
 }

@@ -10,6 +10,7 @@ use App\Models\PaymentMethod;
 use App\Models\ServiceMode;
 use App\Models\Shipment;
 use App\Models\ShipmentItem;
+use App\Models\ShipmentTracking;
 use App\Models\ShippingMode;
 use App\Models\TypesOfPacking;
 use App\Models\User;
@@ -209,5 +210,22 @@ class ShipmentController extends Controller
             'success' => true,
             'message' => 'Shipment deleted successfully.'
         ]);
+    }
+
+    public function shipmentsTracking(Request $request, $shipment_id)
+    {
+        $request->validate([
+            'location' => 'required|string|max:255',
+            'tracked_at' => 'required|date',
+            'status_id' => 'required',
+            'notes' => 'nullable|string',
+        ]);
+
+        ShipmentTracking::create(array_merge(
+            $request->all(),
+            ['shipment_id' => $shipment_id]
+        ));
+
+        return redirect()->route('shipments.edit', $shipment_id)->with('success', 'Shipment tracking updated successfully.');
     }
 }

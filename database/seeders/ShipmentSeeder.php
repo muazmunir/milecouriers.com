@@ -9,7 +9,6 @@ use App\Models\DeliveryStatus;
 use App\Models\DeliveryTime;
 use App\Models\PaymentMethod;
 use App\Models\ServiceMode;
-use App\Models\ShipmentStatusHistory;
 use App\Models\ShipmentTracking;
 use App\Models\ShippingMode;
 use App\Models\TypesOfPacking;
@@ -75,17 +74,8 @@ class ShipmentSeeder extends Seeder
                     'shipment_id' => $shipment->id,
                     'location' => 'Location ' . $k,
                     'tracked_at' => Carbon::now()->subDays(rand(0, 10))->toDateTimeString(),
-                    'status' => 1,
+                    'status_id' => DeliveryStatus::inRandomOrder()->first()->id,
                     'notes' => 'Note for tracking entry ' . $k,
-                ]);
-            }
-
-            // Add status history entries for the shipment
-            foreach (range(1, rand(1, 3)) as $l) {
-                ShipmentStatusHistory::create([
-                    'shipment_id' => $shipment->id,
-                    'status' => $l,
-                    'status_description' => 'Description for status ' . $l,
                 ]);
             }
         }
