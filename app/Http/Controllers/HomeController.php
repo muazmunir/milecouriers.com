@@ -15,7 +15,7 @@ class HomeController extends Controller
 
     public function showTracking($shipment_number)
     {
-        $shipment = Shipment::with(['tracking', 'statusHistories'])->where('shipment_number', $shipment_number)->first();
+        $shipment = Shipment::with(['tracking'])->where('shipment_number', $shipment_number)->first();
 
         // Format the tracking history dynamically
         $trackHistory = $shipment->tracking->map(function ($tracking) use ($shipment) {
@@ -27,15 +27,13 @@ class HomeController extends Controller
             ];
         });
 
-        // Get the latest status from status histories or the main shipment status
-        $latestStatus = $shipment->statusHistories->last();
-        
+        // Get the latest status from status histories or the main shipment status       
         return response()->json([
             'trackingNumber' => $shipment->shipment_number,
             'origin' => $shipment->origin_address,
             'destination' => $shipment->destination_address,
             'bookingDate' => $shipment->shipment_date,
-            'currentStatus' => $latestStatus ? $latestStatus->status : 'Pending',
+            'currentStatus' => $shipment->status->name,
             'deliveredOn' => $shipment->status === 'Delivered' ? $shipment->updated_at->format('M d, Y H:i') : null,
             'receivedBy' => $shipment->recipient->name ?? 'N/A', // Assuming `recipient` relation with user name
             'trackHistory' => $trackHistory,
