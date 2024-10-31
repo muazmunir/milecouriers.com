@@ -273,7 +273,7 @@
 
                 </div>
             </div>
-            @else
+            @elseif($shipment->status_id == 5)
             <div class="card">
                 <div class="card-body">
                     <div class="row">
