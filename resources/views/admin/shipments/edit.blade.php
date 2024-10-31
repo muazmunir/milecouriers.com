@@ -169,46 +169,35 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-6 col-lg-1">
-                                                <div class="form-group">
-                                                    <label for="weight">Weight</label>
-                                                    <div class="input-group">
-                                                        <input type="number" value="{{ $item->weight }}" name="weight[]" class="form-control">
-                                                    </div>
-                                                </div>
+
+
+                                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                                <label class="form-label">Quantity</label>
+                                                <div class="touchspin-wrapper"> 
+                                                    <button class="decrement-touchspin btn-touchspin spin-border-primary" type="button">
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
+                                                    <input name="quantity[]" class="input-touchspin spin-outline-primary" value="{{ $item->quantity }}" type="number">
+                                                    <button class="increment-touchspin btn-touchspin spin-border-primary" type="button">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>                                        
                                             </div>
-                                            <div class="col-sm-12 col-md-6 col-lg-1">
-                                                <div class="form-group">
-                                                    <label for="length">Length</label>
-                                                    <div class="input-group">
-                                                        <input type="number" value="{{ $item->length }}" name="length[]" class="form-control">
-                                                    </div>
-                                                </div>
+
+                                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                                <label class="form-label">Weight</label>
+                                                <div class="touchspin-wrapper"> 
+                                                    <button class="decrement-touchspin btn-touchspin spin-border-primary" type="button">
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
+                                                    <input name="weight[]" value="{{ $item->weight }}" class="input-touchspin spin-outline-primary" type="number">
+                                                    <button class="increment-touchspin btn-touchspin spin-border-primary" type="button">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>                                        
                                             </div>
-                                            <div class="col-sm-12 col-md-6 col-lg-1">
-                                                <div class="form-group">
-                                                    <label for="width">Width</label>
-                                                    <div class="input-group">
-                                                        <input type="number" value="{{ $item->width }}" name="width[]" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-6 col-lg-1">
-                                                <div class="form-group">
-                                                    <label for="height">Height</label>
-                                                    <div class="input-group">
-                                                        <input type="number" value="{{ $item->height }}" name="height[]" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-6 col-lg-1">
-                                                <div class="form-group">
-                                                    <label for="declaredValue">DecValue</label>
-                                                    <div class="input-group">
-                                                        <input type="number" value="{{ $item->declared_value }}" name="declared_value[]" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
+
+
                                         </div>
                                     </div>
                                 @endforeach

@@ -13,10 +13,8 @@ class ShipmentItem extends Model
         'shipment_id',
         'description',
         'type_of_packaging_id',
+        'quantity',
         'weight',
-        'length',
-        'width',
-        'height',
         'declared_value',
     ];
 

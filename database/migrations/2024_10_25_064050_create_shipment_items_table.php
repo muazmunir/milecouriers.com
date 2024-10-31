@@ -16,10 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('shipment_id')->constrained('shipments')->onDelete('cascade'); // Foreign key to shipments
             $table->string('description'); // Package description
             $table->unsignedBigInteger('type_of_packaging_id'); // Foreign key to packaging types
+            $table->decimal('quantity', 8, 2)->default(0); // Quantity
             $table->decimal('weight', 8, 2)->default(0); // Weight
-            $table->decimal('length', 8, 2)->default(0); // Length
-            $table->decimal('width', 8, 2)->default(0); // Width
-            $table->decimal('height', 8, 2)->default(0); // Height
             $table->decimal('declared_value', 10, 2)->default(0); // Declared value
             $table->timestamps();
         });

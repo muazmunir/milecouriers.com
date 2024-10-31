@@ -60,10 +60,8 @@ class ShipmentSeeder extends Seeder
                     'shipment_id' => $shipment->id,
                     'description' => 'Item Description ' . $j,
                     'type_of_packaging_id' => $typesOfPacking->random(),
-                    'weight' => rand(1, 100),
-                    'length' => rand(1, 50),
-                    'width' => rand(1, 50),
-                    'height' => rand(1, 50),
+                    'quantity' => rand(1, 50),
+                    'weight' => rand(1, 50),
                     'declared_value' => rand(100, 1000),
                 ]);
             }
