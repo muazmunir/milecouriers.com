@@ -27,6 +27,7 @@ return new class extends Migration
             $table->unsignedBigInteger('shipping_mode_id')->nullable();
             $table->unsignedBigInteger('service_mode_id')->nullable();
             $table->unsignedBigInteger('driver_id')->nullable();
+            $table->string('received_by')->nullable();
             $table->timestamps();
         });
     }

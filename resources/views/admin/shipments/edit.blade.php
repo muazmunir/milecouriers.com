@@ -2,11 +2,7 @@
 @section('title', $pageTitle)
 @section('content')
 <div class="container-fluid">
-    <form action="{{ isset($shipment) ? route('shipments.update', $shipment->id) : route('shipments.store') }}" method="POST">
-    @csrf
-    @if(isset($shipment))
-            @method('PUT')
-        @endif
+    
         <div class="row">
                 @if ($errors->any())
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -212,9 +208,36 @@
                 </div>
             </div>
         </div>
-    </form>
     <div class="row">
         <div class="col-md-12">
+            
+            @if($shipment->status_id != 5)
+            <div class="card">
+                <div class="card-body">
+                    
+                    <form action="{{ route('shipments.update', $shipment->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="row">
+
+                            <div class="col-md-6">
+                                <label for="" class="form-label">Recieved By</label>
+                                <input type="text" name="received_by" class="form-control">
+
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="" class="form-label">Actual Delievery Date</label>
+                                <input type="date" name="actual_delivery_date" class="form-control">
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <button type="submit" class="btn btn-primary mt-3">Update Tracking</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <!-- Shipment Tracking Update Form -->
@@ -250,6 +273,25 @@
 
                 </div>
             </div>
+            @else
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="" class="form-label">Recieved By</label>
+                            <input type="text" name="received_by" value="{{ $shipment->received_by }}" class="form-control">
+
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="" class="form-label">Actual Delievery Date</label>
+                            <input type="date" name="actual_delivery_date" value="{{ $shipment->actual_delivery_date }}" class="form-control">
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            @endif
+
             <div class="card">  
                 <div class="card-header bg-primary pt-2 pb-2 d-flex justify-content-between align-items-center">
                     <h4 class="text-white mb-0">Tracking History</h4>

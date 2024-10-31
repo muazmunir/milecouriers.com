@@ -34,8 +34,8 @@ class HomeController extends Controller
             'destination' => $shipment->destination_address,
             'bookingDate' => $shipment->shipment_date,
             'currentStatus' => $shipment->status->name,
-            'deliveredOn' => $shipment->status === 'Delivered' ? $shipment->updated_at->format('M d, Y H:i') : null,
-            'receivedBy' => $shipment->recipient->name ?? 'N/A', // Assuming `recipient` relation with user name
+            'deliveredOn' => $shipment->actual_delivery_date,
+            'receivedBy' => $shipment->received_by, // Assuming `recipient` relation with user name
             'trackHistory' => $trackHistory,
         ]);
         }

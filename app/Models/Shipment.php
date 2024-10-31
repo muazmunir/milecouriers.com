@@ -23,7 +23,8 @@ class Shipment extends Model
         'payment_method_id',
         'shipping_mode_id',
         'service_mode_id',
-        'driver_id'
+        'driver_id',
+        'received_by'
     ];
 
     public function sender()
