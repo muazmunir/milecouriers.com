@@ -28,13 +28,10 @@
     <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/slick-theme.css">
     <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/scrollbar.css">
     <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/animate.css">
-    <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/echart.css">
-    <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/date-picker.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/echart.css">
+    <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/date-picker.css"> -->
     <!-- Plugins css Ends-->
-    <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/slick.css">
-    <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/slick-theme.css">
-    <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/scrollbar.css">
-    <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/animate.css">
+
     <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/datatables.css">
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="/backend/assets/css/vendors/bootstrap.css">

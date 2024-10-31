@@ -39,6 +39,15 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="col-md-4 form-group">
+                            <label for="driver_id">Driver:</label>
+                            <select id="driver_id" class="form-control select2">
+                                <option value="">All</option>
+                                @foreach($drivers as $driver)
+                                <option value="{{ $driver->id }}">{{ $driver->full_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="col-md-4 form-group mt-4">
                             <button id="searchButton" class="btn btn-primary mt-2">Search</button>
                             <button id="clearFilters" class="btn btn-secondary mt-2">Clear Filters</button>
@@ -89,6 +98,7 @@
                     d.start_date = $('#start_date').val();
                     d.end_date = $('#end_date').val();
                     d.status_id = $('#status_id').val();
+                    d.driver_id = $('#driver_id').val();
                 }
             },
             columns: [
@@ -107,7 +117,7 @@
             table.draw();
         });
         $('#clearFilters').on('click', function () {
-            $('#shipment_number, #start_date, #end_date, #status_id').val('');
+            $('#shipment_number, #start_date, #end_date, #status_id, #driver_id').val('');
             table.draw();
         })
             // Delete Service Mode

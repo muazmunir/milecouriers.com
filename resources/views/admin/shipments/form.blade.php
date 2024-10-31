@@ -151,18 +151,19 @@
                     <div class="card-body">
                         <div id="packageContainer">
                             <div class="card-wrapper border rounded-3 border-primary package-item mb-3">
-                                <div class="row align-items-center"> <!-- Added 'align-items-center' for vertical alignment -->
+                                <div class="row align-items-center">
+                                    <!-- Description Field -->
                                     <div class="col-sm-12 col-md-6 col-lg-3">
-                                        <div class="form-group">
-                                            <label for="description">Package Description</label>
-                                            <div class="input-group">
-                                                <textarea name="description[]" rows="1" class="form-control"  placeholder="Package Description"></textarea>
-                                            </div>
+                                        <label for="description" class="form-label">Description</label>
+                                        <div class="touchspin-wrapper"> 
+                                            <textarea name="description[]" rows="1" class="form-control" placeholder="Package Description"></textarea>
                                         </div>
                                     </div>
+                                    
+                                    <!-- Package Type Field -->
                                     <div class="col-sm-12 col-md-6 col-lg-3">
-                                        <div class="form-group">
-                                            <label for="shipping_mode_0">Type of packing</label>
+                                        <label for="type_of_packaging" class="form-label">Package Type</label>
+                                        <div class="touchspin-wrapper"> 
                                             <select name="type_of_packaging[]" class="form-select">
                                                 @foreach($type_of_packagings as $type_of_packaging)
                                                     <option value="{{ $type_of_packaging->id }}">{{ $type_of_packaging->name }}</option>
@@ -170,47 +171,37 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-1">
-                                        <div class="form-group">
-                                            <label for="weight">Weight</label>
-                                            <div class="input-group">
-                                                <input type="number" value="0" name="weight[]"  class="form-control">
-                                            </div>
-                                        </div>
+                                    
+                                    <!-- Quantity Field -->
+                                    <div class="col-sm-12 col-md-6 col-lg-2">
+                                        <label class="form-label">Quantity</label>
+                                        <div class="touchspin-wrapper"> 
+                                            <button class="decrement-touchspin btn-touchspin spin-border-primary" type="button">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                            <input name="quantity[]" class="input-touchspin spin-outline-primary" type="number">
+                                            <button class="increment-touchspin btn-touchspin spin-border-primary" type="button">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>                                        
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-1">
-                                        <div class="form-group">
-                                            <label for="length">Length</label>
-                                            <div class="input-group">
-                                                <input type="number" value="0" name="length[]" class="form-control">
-                                            </div>
-                                        </div>
+                                    
+                                    <!-- Weight Field -->
+                                    <div class="col-sm-12 col-md-6 col-lg-2">
+                                        <label class="form-label">Weight</label>
+                                        <div class="touchspin-wrapper"> 
+                                            <button class="decrement-touchspin btn-touchspin spin-border-primary" type="button">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                            <input name="weight[]" class="input-touchspin spin-outline-primary" type="number">
+                                            <button class="increment-touchspin btn-touchspin spin-border-primary" type="button">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>                                        
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-1">
-                                        <div class="form-group">
-                                            <label for="width">Width</label>
-                                            <div class="input-group">
-                                                <input type="number"  value="0" name="width[]" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-1">
-                                        <div class="form-group">
-                                            <label for="height_0">Height</label>
-                                            <div class="input-group">
-                                                <input type="number"  value="0"  name="height[]" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-1">
-                                        <div class="form-group">
-                                            <label for="declaredValue_0">DecValue</label>
-                                            <div class="input-group">
-                                                <input type="number"  value="0" name="declared_value[]" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-1 d-flex align-items-center justify-content-center">
+                                    
+                                    <!-- Remove Button -->
+                                    <div class="col-sm-12 col-md-6 col-lg-2 d-flex align-items-center justify-content-center">
                                         <div class="form-group">
                                             <button type="button" class="btn btn-outline-danger remove-package" style="height: 38px;">
                                                 <i class="fa fa-trash"></i>
@@ -366,6 +357,51 @@ $(document).ready(function() {
     
     
     $('.package-item:first').find('.remove-package').hide();
+
+    function initializeTouchspin(wrapper) {
+    const inputField = wrapper.querySelector('.input-touchspin');
+    const incrementButton = wrapper.querySelector('.increment-touchspin');
+    const decrementButton = wrapper.querySelector('.decrement-touchspin');
+
+    // Ensure all elements are present before proceeding
+    if (!inputField || !incrementButton || !decrementButton) {
+        console.warn("Touchspin elements not found in wrapper:", wrapper);
+        return; // Skip this iteration if any element is missing
+    }
+
+    // Set the initial value and define step based on input name
+    let step;
+    if (inputField.name === 'quantity[]') {
+        inputField.value = parseInt(inputField.value) || 1; // Start at 1 for quantity
+        step = 1;
+    } else if (inputField.name === 'weight[]') {
+        inputField.value = parseFloat(inputField.value) || 0.5; // Start at 0.5 for weight
+        step = 0.5;
+    } else {
+        console.warn("Unrecognized input name:", inputField.name);
+        return; // Skip if the input name does not match expected values
+    }
+
+    // Increment button functionality
+    incrementButton.addEventListener('click', () => {
+        let currentValue = parseFloat(inputField.value) || 0;
+        currentValue += step;
+        inputField.value = currentValue.toFixed(step === 0.5 ? 1 : 0); // Use 1 decimal for weight
+    });
+
+    // Decrement button functionality
+    decrementButton.addEventListener('click', () => {
+        let currentValue = parseFloat(inputField.value) || 0;
+        if (currentValue > step) {
+            currentValue -= step;
+            inputField.value = currentValue.toFixed(step === 0.5 ? 1 : 0); // Use 1 decimal for weight
+        }
+    });
+}
+
+    function scrollToBottom() {
+        $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
+    }
     // Function to add a new package
     $('#addPackage').click(function() {
         var packageClone = $('.package-item:first').clone();  // Clone the first package item
@@ -373,7 +409,15 @@ $(document).ready(function() {
         packageClone.find('.remove-package').show();   // Ensure remove button is visible for the cloned item
 
         $('#packageContainer').append(packageClone);  // Add the cloned section to the container
+        packageClone.find('.touchspin-wrapper').each(function() {
+            initializeTouchspin(this);
+        });
+        scrollToBottom();
     });
+
+    $('.package-item .touchspin-wrapper').each(function() {
+    initializeTouchspin(this);
+});
 
     // Function to remove a package
     $(document).on('click', '.remove-package', function() {

@@ -33,7 +33,9 @@ class ShipmentController extends Controller
 
         $delivery_statuses = DeliveryStatus::all();
 
-        return view('admin.shipments.index', compact('pageTitle', 'delivery_statuses'));
+        $drivers = User::where('type', 2)->get();
+
+        return view('admin.shipments.index', compact('pageTitle', 'delivery_statuses', 'drivers'));
     }
 
     public function dataTable(Request $request): JsonResponse

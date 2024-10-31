@@ -23,6 +23,8 @@
     <script src="/backend/assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
     <script src="/backend/assets/js/sweet-alert/sweetalert.min.js"></script>
     <script src="/backend/assets/js/typeahead/handlebars.js"></script>
+    <!-- <script src="/backend/assets/js/touchspin_2/custom_touchspin.js"></script> -->
+
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="/backend/assets/js/script.js"></script>

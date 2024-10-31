@@ -41,6 +41,10 @@ class ShipmentRepository implements ShipmentInterface
             });
         }
 
+        if ($request->has('driver_id') && ! empty($request->get('driver_id'))) {
+            $query->where('driver_id', $request->get('driver_id'));
+        }
+
         return $this->datatables->of($query)
             
             ->addColumn('sender', function ($shipment) {
