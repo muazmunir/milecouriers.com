@@ -51,6 +51,7 @@
                         <div class="col-md-4 form-group mt-4">
                             <button id="searchButton" class="btn btn-primary mt-2">Search</button>
                             <button id="clearFilters" class="btn btn-secondary mt-2">Clear Filters</button>
+                            <button id="printAllButton" class="btn btn-info mt-2">Print All</button>
                         </div>
 
                     </div>
@@ -119,7 +120,18 @@
         $('#clearFilters').on('click', function () {
             $('#shipment_number, #start_date, #end_date, #status_id, #driver_id').val('');
             table.draw();
-        })
+        });
+
+        $('#printAllButton').on('click', function () {
+            var shipmentNumber = $('#shipment_number').val();
+            var startDate = $('#start_date').val();
+            var endDate = $('#end_date').val();
+            var statusId = $('#status_id').val();
+            var driverId = $('#driver_id').val();
+
+            // Redirect to the print route with filter parameters
+            window.location.href = `/admin/shipments/print?shipment_number=${shipmentNumber}&start_date=${startDate}&end_date=${endDate}&status_id=${statusId}&driver_id=${driverId}`;
+        });
             // Delete Service Mode
         $(document).on('click', '#deleteShipment', function (e) {
             e.preventDefault();

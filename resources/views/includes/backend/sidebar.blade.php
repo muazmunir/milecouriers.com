@@ -30,10 +30,10 @@
                     <i class="fa fa-thumb-tack"></i>
                     <a class="sidebar-link sidebar-title link-nav" href="/admin/dashboard">
                         <svg class="stroke-icon">
-                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>
+                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-home"></use>
                         </svg>
                         <svg class="fill-icon">
-                            <use href="/backend/assets/svg/icon-sprite.svg#fill-file"></use>
+                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-home"></use>
                         </svg>
                         <span>Dashboard</span>
                     </a>
@@ -56,10 +56,10 @@
                     <i class="fa fa-thumb-tack"></i>
                     <a class="sidebar-link sidebar-title link-nav" href="/admin/users">
                         <svg class="stroke-icon">
-                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>
+                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-user"></use>
                         </svg>
                         <svg class="fill-icon">
-                            <use href="/backend/assets/svg/icon-sprite.svg#fill-file"></use>
+                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-user"></use>
                         </svg>
                         <span>Users</span>
                     </a>
@@ -69,10 +69,10 @@
                     <i class="fa fa-thumb-tack"></i>
                     <a class="sidebar-link sidebar-title link-nav" href="/admin/users/create">
                         <svg class="stroke-icon">
-                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-file"></use>
+                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-user"></use>
                         </svg>
                         <svg class="fill-icon">
-                            <use href="/backend/assets/svg/icon-sprite.svg#fill-file"></use>
+                            <use href="/backend/assets/svg/icon-sprite.svg#stroke-user"></use>
                         </svg>
                         <span>Add User</span>
                     </a>
@@ -126,7 +126,7 @@
                         <svg class="fill-icon">
                             <use href="/backend/assets/svg/icon-sprite.svg#fill-file"></use>
                         </svg>
-                        <span>Types Of Packing</span>
+                        <span>Packing Types</span>
                     </a>
                 </li>
 
@@ -178,7 +178,7 @@
                         <svg class="fill-icon">
                             <use href="/backend/assets/svg/icon-sprite.svg#fill-file"></use>
                         </svg>
-                        <span>List of Shipments</span>
+                        <span>Shipments</span>
                     </a>
                 </li>
    

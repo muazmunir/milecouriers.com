@@ -70,5 +70,6 @@ Route::middleware('auth', 'verified', 'user-access:admin')->prefix('admin')->gro
     Route::get('/get-states/{country_id}', [StateController::class, 'getStates'])->name('get.states');
     Route::get('/get-cities/{state_id}', [CityController::class, 'getCities'])->name('get.cities');
     Route::post('/shipments/tracking/{shipment_id}', [ShipmentController::class, 'shipmentsTracking'])->name('shipments.tracking');
+    Route::get('/shipments/print', [ShipmentController::class, 'printAll'])->name('shipments.printAll');
     Route::CustomResource('shipments', ShipmentController::class);
 });

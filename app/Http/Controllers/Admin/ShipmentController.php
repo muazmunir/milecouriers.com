@@ -243,4 +243,31 @@ class ShipmentController extends Controller
 
         return redirect()->route('shipments.edit', $shipment_id)->with('success', 'Shipment tracking updated successfully.');
     }
+
+    public function printAll(Request $request)
+    {
+        $query = Shipment::query();
+
+        // Apply filters based on query parameters
+        if ($request->shipment_number) {
+            $query->where('shipment_number', $request->shipment_number);
+        }
+        if ($request->start_date) {
+            $query->whereDate('shipment_date', '>=', $request->start_date);
+        }
+        if ($request->end_date) {
+            $query->whereDate('shipment_date', '<=', $request->end_date);
+        }
+        if ($request->status_id) {
+            $query->where('status_id', $request->status_id);
+        }
+        if ($request->driver_id) {
+            $query->where('driver_id', $request->driver_id);
+        }
+
+        // Get all shipments that match the filters
+        $shipments = $query->get();
+
+        return view('admin.shipments.print_all', compact('shipments'));
+    }
 }
