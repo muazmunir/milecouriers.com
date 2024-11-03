@@ -129,8 +129,8 @@
             var statusId = $('#status_id').val();
             var driverId = $('#driver_id').val();
 
-            // Redirect to the print route with filter parameters
-            window.location.href = `/admin/shipments/print?shipment_number=${shipmentNumber}&start_date=${startDate}&end_date=${endDate}&status_id=${statusId}&driver_id=${driverId}`;
+            window.open(`/admin/shipments/print?shipment_number=${shipmentNumber}&start_date=${startDate}&end_date=${endDate}&status_id=${statusId}&driver_id=${driverId}`, '_blank');
+
         });
             // Delete Service Mode
         $(document).on('click', '#deleteShipment', function (e) {

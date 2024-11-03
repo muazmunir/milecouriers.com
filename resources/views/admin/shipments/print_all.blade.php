@@ -53,7 +53,7 @@
         }
         input.form-control {
             width: 100%; /* Make input fields take full column width */
-            font-size: 10px; /* Reduced font size for input fields */
+            font-size: 14px; /* Reduced font size for input fields */
             padding: 4px; /* Reduced padding for input fields */
             border: 1px solid #ddd;
             border-radius: 4px; /* Optional: adds a little rounding to the corners */
@@ -82,9 +82,29 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $shipment->shipment_number }}</td>
                     <td>{{ $shipment->sender->full_name }}</td>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
-                    <td><input type="text" /></td>
+                    <td>
+                        @if($shipment->status_id == 5)
+                            {{ $shipment->received_by ?? '' }}
+                        @else
+                            <input type="text" />
+                        @endif
+                    </td>
+                    
+                    <td>
+                        @if($shipment->status_id == 5)
+                            {{ $shipment->actual_delivery_date ?? '' }}
+                        @else
+                            <input type="text" />
+                        @endif
+                    </td>
+                    
+                    <td>
+                        @if($shipment->status_id == 5)
+                            {{ $shipment->status->name ?? '' }}
+                        @else
+                            <input type="text" />
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
