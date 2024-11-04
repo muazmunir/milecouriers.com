@@ -82,10 +82,8 @@ class ShipmentController extends Controller
             'driver_id' => 'required|exists:users,id',
             'description.*' => 'required|string|max:255',
             'type_of_packaging.*' => 'required|exists:types_of_packings,id',
+            'quantity.*' => 'required|numeric|min:0',
             'weight.*' => 'required|numeric|min:0',
-            'length.*' => 'required|numeric|min:0',
-            'width.*' => 'required|numeric|min:0',
-            'height.*' => 'required|numeric|min:0',
             'declared_value.*' => 'required|numeric|min:0',
         ]);
 
@@ -110,11 +108,8 @@ class ShipmentController extends Controller
                 'shipment_id' => $shipment->id,
                 'description' => $description,
                 'type_of_packaging_id' => $request->type_of_packaging[$index],
+                'quantity' => $request->quantity[$index],
                 'weight' => $request->weight[$index],
-                'length' => $request->length[$index],
-                'width' => $request->width[$index],
-                'height' => $request->height[$index],
-                'declared_value' => $request->declared_value[$index],
             ]);
         }
 
