@@ -265,4 +265,17 @@ class ShipmentController extends Controller
 
         return view('admin.shipments.print_all', compact('shipments'));
     }
+
+    public function updateDriver(Request $request)
+    {
+        $request->validate([
+            'shipment_id' => 'required|exists:shipments,id',
+        ]);
+
+        $shipment = Shipment::find($request->shipment_id);
+        $shipment->driver_id = $request->driver_id;
+        $shipment->save();
+
+        return response()->json(['success' => true, 'message' => 'Driver updated successfully!']);
+    }
 }

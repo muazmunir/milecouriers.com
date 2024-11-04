@@ -37,6 +37,11 @@ class Shipment extends Model
         return $this->belongsTo(User::class, 'recipient_id');
     }
 
+    public function driver()
+    {
+        return $this->belongsTo(User::class, 'driver_id');
+    }
+
     public function status()
     {
         return $this->belongsTo(DeliveryStatus::class, 'status_id');

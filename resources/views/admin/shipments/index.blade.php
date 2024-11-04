@@ -56,15 +56,16 @@
 
                     </div>
                     <div class="table-responsive custom-scrollbar">
-                        <table class="display" id="service_mode_datatable">
+                        <table class="display" id="shipments_datatable">
                             <thead>
                                 <tr>
                                     <th>Tracking</th>
                                     <th>Date</th>
                                     <th>Sender</th>
-                                    <th>Recipient</th>
-                                    <th>Origin</th>
+                                    <!-- <th>Recipient</th> -->
+                                    <!-- <th>Origin</th> -->
                                     <th>Destination</th>
+                                    <th>Driver</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -88,7 +89,7 @@
 <script>
     $(document).ready(function () {
         // Initialize DataTable
-        var table = $("#service_mode_datatable").DataTable({
+        var table = $("#shipments_datatable").DataTable({
             processing: true,
             serverSide: true,
             searching: false,
@@ -106,12 +107,41 @@
                 { data: 'shipment_number', name: 'shipment_number' },
                 { data: 'shipment_date', name: 'shipment_date' },
                 { data: 'sender', name: 'sender' },
-                { data: 'recipient', name: 'recipient' },
-                { data: 'origin_address', name: 'origin_address' },
+                // { data: 'recipient', name: 'recipient' },
+                // { data: 'origin_address', name: 'origin_address' },
                 { data: 'destination_address', name: 'destination_address' },
+                { 
+                    data: 'driver', 
+                    name: 'driver',
+                    render: function(data, type, row) {
+                        // Render the driver select dropdown
+                        var select = '<select class="driver-select-dropdown select2" data-id="' + row.id + '">';
+                        select += '<option value="" disabled ' + (row.driver_id ? '' : 'selected') + '>Choose One</option>'; // Add "Choose One" option
+                        <?php foreach ($drivers as $driver) { ?>
+                            select += '<option value="{{ $driver->id }}" ' + (row.driver_id == "{{ $driver->id }}" ? 'selected' : '') + '>{{ $driver->full_name }}</option>';
+                        <?php } ?>
+                        select += '</select>';
+                        return select;
+                    }
+        
+                },
                 { data: 'status', name: 'status' },
-                { data: 'action', name: 'action' },
+                { data: 'action', searchable: false, orderable: false },
             ],
+            initComplete: function () {
+                // Initialize Select2 for all driver select dropdowns
+                $('.select2').select2({
+                    placeholder: "Choose One",
+                    allowClear: true // Enable the clear button
+                });
+            },
+            drawCallback: function() {
+                // Reinitialize Select2 after table redraw
+                $('.select2').select2({
+                    placeholder: "Choose One",
+                    allowClear: true
+                });
+            }
         });
 
         $('#searchButton').on('click', function () {
@@ -120,6 +150,35 @@
         $('#clearFilters').on('click', function () {
             $('#shipment_number, #start_date, #end_date, #status_id, #driver_id').val('');
             table.draw();
+        });
+
+
+        $(document).on('change', '.driver-select-dropdown', function () {
+            var shipmentId = $(this).data('id');
+            var driverId = $(this).val();
+
+            // AJAX request to update the driver for the shipment
+            $.ajax({
+                url: "{{ route('shipments.updateDriver') }}", // Define your route to handle the update
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}', // Include CSRF token
+                    shipment_id: shipmentId,
+                    driver_id: driverId,
+                },
+                success: function (response) {
+                    // Handle success, maybe show a success message
+                    Swal.fire(
+                        'Updated!',
+                        'Driver Updated Successfully',
+                        'success'
+                    );
+                },
+                error: function (xhr) {
+                    // Handle error, maybe show an error message
+                    console.error('Error updating driver:', xhr);
+                }
+            });
         });
 
         $('#printAllButton').on('click', function () {

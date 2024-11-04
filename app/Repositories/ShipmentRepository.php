@@ -56,6 +56,9 @@ class ShipmentRepository implements ShipmentInterface
             ->addColumn('status', function ($shipment) {
                 return $shipment->status->name;
             })
+            ->addColumn('driver', function ($shipment) {
+                return $shipment->driver ? $shipment->driver->full_name : 'Unassigned';
+            })
             ->addColumn('action', function ($shipment) {
                 $action = '<ul class="action">';
 
@@ -69,7 +72,7 @@ class ShipmentRepository implements ShipmentInterface
 
                 return $action;
             })
-            ->rawColumns(['sender', 'recipient', 'status', 'action'])
+            ->rawColumns(['sender', 'recipient', 'status', 'driver', 'action'])
             ->toJson();
     }
 }
