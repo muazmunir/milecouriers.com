@@ -131,6 +131,7 @@
                                 <div class="col-md-4">
                                     <label for="" class="form-label">Assign Driver</label>
                                     <select name="driver_id" class="form-select select2">
+                                        <option value="" selected>Choose an option</option>
                                         @foreach($drivers as $driver)
                                             <option value="{{ $driver->id }}" <?php if(isset($shipment) && $shipment->driver_id == $driver->id) { echo 'selected'; } ?> >{{ $driver->first_name }} {{ $driver->last_name }}</option>
                                         @endforeach
@@ -193,7 +194,7 @@
                                             <button class="decrement-touchspin btn-touchspin spin-border-primary" type="button">
                                                 <i class="fa fa-minus"></i>
                                             </button>
-                                            <input name="weight[]" class="input-touchspin spin-outline-primary" type="number">
+                                            <input name="weight[]" class="input-touchspin spin-outline-primary" type="number" step="0.5">
                                             <button class="increment-touchspin btn-touchspin spin-border-primary" type="button">
                                                 <i class="fa fa-plus"></i>
                                             </button>
@@ -359,45 +360,45 @@ $(document).ready(function() {
     $('.package-item:first').find('.remove-package').hide();
 
     function initializeTouchspin(wrapper) {
-    const inputField = wrapper.querySelector('.input-touchspin');
-    const incrementButton = wrapper.querySelector('.increment-touchspin');
-    const decrementButton = wrapper.querySelector('.decrement-touchspin');
+        const inputField = wrapper.querySelector('.input-touchspin');
+        const incrementButton = wrapper.querySelector('.increment-touchspin');
+        const decrementButton = wrapper.querySelector('.decrement-touchspin');
 
-    // Ensure all elements are present before proceeding
-    if (!inputField || !incrementButton || !decrementButton) {
-        console.warn("Touchspin elements not found in wrapper:", wrapper);
-        return; // Skip this iteration if any element is missing
-    }
-
-    // Set the initial value and define step based on input name
-    let step;
-    if (inputField.name === 'quantity[]') {
-        inputField.value = parseInt(inputField.value) || 1; // Start at 1 for quantity
-        step = 1;
-    } else if (inputField.name === 'weight[]') {
-        inputField.value = parseFloat(inputField.value) || 0.5; // Start at 0.5 for weight
-        step = 0.5;
-    } else {
-        console.warn("Unrecognized input name:", inputField.name);
-        return; // Skip if the input name does not match expected values
-    }
-
-    // Increment button functionality
-    incrementButton.addEventListener('click', () => {
-        let currentValue = parseFloat(inputField.value) || 0;
-        currentValue += step;
-        inputField.value = currentValue.toFixed(step === 0.5 ? 1 : 0); // Use 1 decimal for weight
-    });
-
-    // Decrement button functionality
-    decrementButton.addEventListener('click', () => {
-        let currentValue = parseFloat(inputField.value) || 0;
-        if (currentValue > step) {
-            currentValue -= step;
-            inputField.value = currentValue.toFixed(step === 0.5 ? 1 : 0); // Use 1 decimal for weight
+        // Ensure all elements are present before proceeding
+        if (!inputField || !incrementButton || !decrementButton) {
+            console.warn("Touchspin elements not found in wrapper:", wrapper);
+            return; // Skip this iteration if any element is missing
         }
-    });
-}
+
+        // Set the initial value and define step based on input name
+        let step;
+        if (inputField.name === 'quantity[]') {
+            inputField.value = parseInt(inputField.value) || 1; // Start at 1 for quantity
+            step = 1;
+        } else if (inputField.name === 'weight[]') {
+            inputField.value = parseFloat(inputField.value) || 0.5; // Start at 0.5 for weight
+            step = 0.5;
+        } else {
+            console.warn("Unrecognized input name:", inputField.name);
+            return; // Skip if the input name does not match expected values
+        }
+
+        // Increment button functionality
+        incrementButton.addEventListener('click', () => {
+            let currentValue = parseFloat(inputField.value) || 0;
+            currentValue += step;
+            inputField.value = currentValue.toFixed(step === 0.5 ? 1 : 0); // Use 1 decimal for weight
+        });
+
+        // Decrement button functionality
+        decrementButton.addEventListener('click', () => {
+            let currentValue = parseFloat(inputField.value) || 0;
+            if (currentValue > step) {
+                currentValue -= step;
+                inputField.value = currentValue.toFixed(step === 0.5 ? 1 : 0); // Use 1 decimal for weight
+            }
+        });
+    }
 
     function scrollToBottom() {
         $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
@@ -416,8 +417,8 @@ $(document).ready(function() {
     });
 
     $('.package-item .touchspin-wrapper').each(function() {
-    initializeTouchspin(this);
-});
+        initializeTouchspin(this);
+    });
 
     // Function to remove a package
     $(document).on('click', '.remove-package', function() {

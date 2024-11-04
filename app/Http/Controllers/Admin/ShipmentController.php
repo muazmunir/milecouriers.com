@@ -79,7 +79,7 @@ class ShipmentController extends Controller
             'payment_method_id' => 'required|exists:payment_methods,id',
             'shipping_mode_id' => 'required|exists:shipping_modes,id',
             'service_mode_id' => 'required|exists:service_modes,id',
-            'driver_id' => 'required|exists:users,id',
+            'driver_id' => 'nullable|exists:users,id',
             'description.*' => 'required|string|max:255',
             'type_of_packaging.*' => 'required|exists:types_of_packings,id',
             'quantity.*' => 'required|numeric|min:0',
